@@ -1,4 +1,3 @@
-import { ClerkProvider } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
@@ -36,14 +35,12 @@ export default async function AppLayout({
   }
 
   return (
-    <ClerkProvider>
-      <div className="flex min-h-screen">
-        <Sidebar sovereignty={sovereignty} />
-        <div className="flex min-w-0 flex-1 flex-col">
-          <Topbar />
-          <main className="flex-1 p-6">{children}</main>
-        </div>
+    <div className="flex min-h-screen">
+      <Sidebar sovereignty={sovereignty} />
+      <div className="flex min-w-0 flex-1 flex-col">
+        <Topbar />
+        <main className="flex-1 p-6">{children}</main>
       </div>
-    </ClerkProvider>
+    </div>
   );
 }

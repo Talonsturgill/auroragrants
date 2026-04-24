@@ -1,13 +1,11 @@
-import { ClerkProvider, SignIn } from "@clerk/nextjs";
+import { SignIn } from "@clerk/nextjs";
 
 export const dynamic = "force-dynamic";
 
 export default function SignInPage() {
   return (
-    <ClerkProvider>
-      <div className="flex min-h-screen items-center justify-center bg-secondary/40 p-6">
-        <SignIn />
-      </div>
-    </ClerkProvider>
+    <div className="flex min-h-screen items-center justify-center bg-secondary/40 p-6">
+      <SignIn />
+    </div>
   );
 }
