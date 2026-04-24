@@ -64,7 +64,7 @@ RUN_REAL_EVALS=1 ANTHROPIC_API_KEY=sk-ant-... pytest starter/evals/test_extracto
 ```
 
 The model is configurable via `EXTRACTOR_MODEL` (default
-`claude-sonnet-4-5`).
+`claude-sonnet-4-6`).
 
 ## Adding a new letter
 

@@ -86,7 +86,7 @@ def _call_anthropic(parsed_document_text: str) -> dict[str, Any]:
     schema = json.loads(SCHEMA_PATH.read_text())
     client = anthropic.Anthropic()
     resp = client.messages.create(
-        model=os.environ.get("EXTRACTOR_MODEL", "claude-sonnet-4-5"),
+        model=os.environ.get("EXTRACTOR_MODEL", "claude-sonnet-4-6"),
         max_tokens=8000,
         system=EXTRACTOR_SYSTEM_PROMPT,
         messages=[
