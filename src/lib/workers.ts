@@ -184,6 +184,52 @@ export async function extractRequirements(
   });
 }
 
+export interface ExportReportResult {
+  blob: Blob;
+  filename: string;
+}
+
+/**
+ * Phase 4: render a report to PDF, DOCX, or plain text via the Python
+ * worker's /export/report endpoint. Returns the raw Blob and the filename
+ * extracted from the Content-Disposition header.
+ */
+export async function exportReport(
+  reportId: string,
+  format: "pdf" | "docx" | "text",
+  tenantId: string,
+): Promise<ExportReportResult> {
+  const token = await signWorkerToken(tenantId, { report_id: reportId });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 120_000);
+  try {
+    const res = await fetch(`${WORKER_URL}/export/report`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+        "x-tenant-id": tenantId,
+      },
+      body: JSON.stringify({ report_id: reportId, format }),
+      signal: controller.signal,
+    });
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      throw new WorkerError(
+        `worker /export/report returned ${res.status}: ${detail.slice(0, 200)}`,
+        res.status,
+      );
+    }
+    const blob = await res.blob();
+    const disposition = res.headers.get("content-disposition") ?? "";
+    const match = /filename="([^"]+)"/.exec(disposition);
+    const filename = match ? match[1] : `report.${format === "text" ? "txt" : format}`;
+    return { blob, filename };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 /**
  * Phase 4: run the Writer-Critic-Editor loop on a single report_field.
  *

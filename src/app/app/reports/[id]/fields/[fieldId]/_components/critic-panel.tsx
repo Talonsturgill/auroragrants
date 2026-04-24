@@ -147,6 +147,16 @@ export function CriticPanel({
 }: CriticPanelProps) {
   const [open, setOpen] = React.useState(defaultOpen);
 
+  const groupedFixes = React.useMemo(() => {
+    const byKey: Record<FixSeverity, CriticFix[]> = {
+      high: [],
+      medium: [],
+      low: [],
+    };
+    for (const f of critique?.fixes ?? []) byKey[f.severity ?? "low"].push(f);
+    return byKey;
+  }, [critique?.fixes]);
+
   if (!critique) {
     return (
       <section
@@ -160,16 +170,6 @@ export function CriticPanel({
       </section>
     );
   }
-
-  const groupedFixes = React.useMemo(() => {
-    const byKey: Record<FixSeverity, CriticFix[]> = {
-      high: [],
-      medium: [],
-      low: [],
-    };
-    for (const f of critique.fixes) byKey[f.severity].push(f);
-    return byKey;
-  }, [critique.fixes]);
 
   return (
     <section

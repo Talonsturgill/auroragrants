@@ -11,8 +11,6 @@ interface CitationPillProps {
   citation: Citation | null;
   /** 1-indexed number to display inside the pill. */
   index: number;
-  /** Optional ref used by the citations panel to scroll to this pill. */
-  innerRef?: React.Ref<HTMLButtonElement>;
   /** Called when the pill is clicked. The citations panel wires scroll here. */
   onActivate?: () => void;
   className?: string;
@@ -36,8 +34,8 @@ export const CitationPill = React.forwardRef<
   HTMLButtonElement,
   CitationPillProps
 >(function CitationPill(
-  { citation, index, onActivate, className, innerRef },
-  _ref,
+  { citation, index, onActivate, className },
+  ref,
 ) {
   const missing = citation == null;
   const title = missing
@@ -53,32 +51,32 @@ export const CitationPill = React.forwardRef<
     : `Citation ${index}. ${excerpt} Source ${title}.`;
 
   const tooltipBody = (
-    <div className="space-y-1">
+    <span className="flex flex-col gap-1">
       {missing ? (
-        <p className="font-medium text-destructive">Citation missing</p>
+        <span className="font-medium text-destructive">Citation missing</span>
       ) : (
         <>
-          <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+          <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
             Source
-          </p>
-          <p className="font-medium">{title}</p>
+          </span>
+          <span className="font-medium">{title}</span>
           {citation.section_heading ? (
-            <p className="text-xs text-muted-foreground">
+            <span className="text-xs text-muted-foreground">
               {citation.section_heading}
-            </p>
+            </span>
           ) : null}
-          <p className="mt-1 whitespace-pre-line text-xs">
+          <span className="mt-1 whitespace-pre-line text-xs">
             {truncate(citation.excerpt ?? "", 240)}
-          </p>
+          </span>
         </>
       )}
-    </div>
+    </span>
   );
 
   return (
     <Tooltip content={tooltipBody} ariaLabel={ariaLabel}>
       <button
-        ref={innerRef}
+        ref={ref}
         type="button"
         data-citation-id={index}
         data-missing={missing ? "true" : "false"}

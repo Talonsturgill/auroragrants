@@ -124,7 +124,7 @@ export function DraftEditor({
                   index={s.index}
                   citation={cite}
                   onActivate={() => onCitationActivate?.(s.index)}
-                  innerRef={(el) => registerPillRef?.(s.index, el)}
+                  ref={(el) => registerPillRef?.(s.index, el)}
                 />
               );
             })}
