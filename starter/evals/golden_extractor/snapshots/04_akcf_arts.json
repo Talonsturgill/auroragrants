@@ -1,0 +1,96 @@
+{
+  "award_summary": {
+    "program_name": "Arts Project Fund",
+    "funder_name": "Alaska Community Foundation",
+    "award_min_usd": 25000,
+    "award_max_usd": 25000,
+    "period_months": 6,
+    "cfda_number": null,
+    "eligibility_summary": "Alaska organization awarded under the Alaska Community Foundation Arts Project Fund."
+  },
+  "reports": [
+    {
+      "title": "Final Report",
+      "report_type": "final",
+      "due_offset_days": 60,
+      "period_months": 6,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "project_description",
+          "label": "Project Description",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 500,
+          "word_count_min": null,
+          "description": "Short description of the arts programming completed under the grant."
+        },
+        {
+          "key": "community_reach",
+          "label": "Community Reach",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Audience, participants, and communities reached during the project period."
+        },
+        {
+          "key": "budget_narrative",
+          "label": "Budget Narrative",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 300,
+          "word_count_min": null,
+          "description": "Plain-language summary of expenditures against the approved budget."
+        },
+        {
+          "key": "artist_and_community_reflections",
+          "label": "Artist and Community Reflections",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Brief reflections from participating artists or community members."
+        }
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "field": "award_summary.program_name",
+      "page": 1,
+      "quote": "Alaska Community Foundation's Arts Project Fund"
+    },
+    {
+      "field": "award_summary.funder_name",
+      "page": 1,
+      "quote": "Alaska Community Foundation"
+    },
+    {
+      "field": "award_summary.award_max_usd",
+      "page": 1,
+      "quote": "awarded $25,000 in support of the arts project"
+    },
+    {
+      "field": "award_summary.period_months",
+      "page": 1,
+      "quote": "grant period is 6 months"
+    },
+    {
+      "field": "reports.0.report_type",
+      "page": 1,
+      "quote": "one final report for this grant"
+    },
+    {
+      "field": "reports.0.due_offset_days",
+      "page": 1,
+      "quote": "due no later than 60 days after the end of the grant period"
+    },
+    {
+      "field": "reports.0.format",
+      "page": 1,
+      "quote": "submitted through the Foundation's online grantee portal"
+    }
+  ],
+  "uncertainties": []
+}

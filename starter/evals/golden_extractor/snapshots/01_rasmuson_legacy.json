@@ -1,0 +1,96 @@
+{
+  "award_summary": {
+    "program_name": "Legacy Grant",
+    "funder_name": "Rasmuson Foundation",
+    "award_min_usd": 100000,
+    "award_max_usd": 100000,
+    "period_months": 12,
+    "cfda_number": null,
+    "eligibility_summary": "Alaska nonprofit organization awarded under the Rasmuson Foundation Legacy Grant program."
+  },
+  "reports": [
+    {
+      "title": "Final Narrative Report",
+      "report_type": "final",
+      "due_offset_days": 90,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "project_summary",
+          "label": "Project Summary",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 500,
+          "word_count_min": null,
+          "description": "Concise overview of the work completed during the grant period."
+        },
+        {
+          "key": "outcomes_and_impact",
+          "label": "Outcomes and Impact",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 750,
+          "word_count_min": null,
+          "description": "Measured outcomes against goals, including quantitative indicators."
+        },
+        {
+          "key": "financial_summary",
+          "label": "Financial Summary",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Plain-language description of how funds were expended."
+        },
+        {
+          "key": "lessons_learned",
+          "label": "Lessons Learned",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Reflections on what worked, what did not, and what to change."
+        }
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "field": "award_summary.program_name",
+      "page": 1,
+      "quote": "awarded a grant under the Legacy Grant program"
+    },
+    {
+      "field": "award_summary.funder_name",
+      "page": 1,
+      "quote": "Rasmuson Foundation Board of Trustees"
+    },
+    {
+      "field": "award_summary.award_max_usd",
+      "page": 1,
+      "quote": "in the amount of $100,000"
+    },
+    {
+      "field": "award_summary.period_months",
+      "page": 1,
+      "quote": "May 1, 2026 through April 30, 2027, a period of 12 months"
+    },
+    {
+      "field": "reports.0.report_type",
+      "page": 1,
+      "quote": "one final narrative report at the close of the grant period"
+    },
+    {
+      "field": "reports.0.due_offset_days",
+      "page": 1,
+      "quote": "due no later than 90 days after the end of the award period"
+    },
+    {
+      "field": "reports.0.format",
+      "page": 1,
+      "quote": "submitted through the Foundation's online grantee portal"
+    }
+  ],
+  "uncertainties": []
+}
