@@ -27,9 +27,13 @@ test.describe('tenant isolation', () => {
     'Supabase env vars not set — run against a live project: NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY',
   );
 
-  const admin = createClient(SB_URL, SB_SERVICE, {
-    auth: { persistSession: false },
-  });
+  // Use placeholders when unconfigured so module evaluation does not throw.
+  // The test.skip above keeps the suite from actually running in that case.
+  const admin = createClient(
+    SB_URL || 'https://placeholder.supabase.co',
+    SB_SERVICE || 'placeholder-service-role-key',
+    { auth: { persistSession: false } },
+  );
 
   let tenantA: string;
   let tenantB: string;
