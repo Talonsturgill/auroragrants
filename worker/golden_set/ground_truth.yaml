@@ -1,0 +1,223 @@
+# Hand-labeled ground truth for the Phase 2 parser bake-off.
+#
+# Each entry below targets one Alaska NOFO or funder guidelines PDF. The
+# actual PDF binaries are not tracked in the repo (many are 5+ MB and the
+# funder URLs change). Drop the PDFs into worker/golden_set/pdfs/ using the
+# slug as the filename (e.g. `rasmuson-legacy-loi.pdf`) before running
+# `python worker/scripts/parser_bakeoff.py`. See README.md in this folder.
+#
+# Field contract:
+#   slug                       stable id, matches the PDF filename stem
+#   source_url                 where the PDF can be downloaded
+#   expected_page_count_range  [lo, hi] so a slightly updated NOFO is OK
+#   expected_headings          subset of headings the parser should find;
+#                              the scorer treats any extra headings as fine
+#   expected_tables            list of {page, n_rows, n_cols, has_header, topic}
+#   expected_fields            deadline, award range, eligibility keywords
+#   notes                      free text; not scored
+version: 1
+pdfs:
+  - slug: rasmuson-legacy-loi
+    source_url: https://rasmuson.org/find-funding/legacy-grants/
+    expected_page_count_range: [4, 14]
+    expected_headings:
+      - "Letter of Inquiry Instructions"
+      - "Eligibility"
+      - "Required Attachments"
+      - "Review Process"
+    expected_tables:
+      - {page: 3, n_rows: 4, n_cols: 2, has_header: true, topic: "funding range"}
+    expected_fields:
+      deadline: "rolling"
+      award_min_usd: 250000
+      award_max_usd: null
+      eligibility_keywords:
+        - "501(c)(3)"
+        - "Alaska"
+        - "federally recognized tribe"
+    notes: "LOI first then invited proposal."
+
+  - slug: rasmuson-tier-1-instructions
+    source_url: https://rasmuson.org/find-funding/tier-1-grants/
+    expected_page_count_range: [3, 10]
+    expected_headings:
+      - "Tier 1 Grant Instructions"
+      - "Eligibility"
+      - "Award Range"
+      - "How to Apply"
+    expected_tables: []
+    expected_fields:
+      deadline: "rolling"
+      award_min_usd: 500
+      award_max_usd: 35000
+      eligibility_keywords:
+        - "501(c)(3)"
+        - "Alaska"
+        - "local government"
+        - "federally recognized tribe"
+    notes: "Most Tier 1 grants are 5k to 20k."
+
+  - slug: denali-commission-program-1
+    source_url: https://denali.gov/grants/
+    expected_page_count_range: [8, 30]
+    expected_headings:
+      - "Program Description"
+      - "Eligibility"
+      - "Application Instructions"
+      - "Reporting Requirements"
+      - "Award Information"
+    expected_tables:
+      - {page: 5, n_rows: 5, n_cols: 3, has_header: true, topic: "award tiers"}
+    expected_fields:
+      deadline: null
+      award_min_usd: 25000
+      award_max_usd: 5000000
+      eligibility_keywords:
+        - "tribe"
+        - "local government"
+        - "nonprofit"
+    notes: "Denali uses SF-424 via denali.gov and the Denali Project Database System."
+
+  - slug: denali-commission-program-2
+    source_url: https://denali.gov/grants/
+    expected_page_count_range: [8, 30]
+    expected_headings:
+      - "Program Description"
+      - "Eligibility"
+      - "Submission Instructions"
+      - "Reporting"
+    expected_tables:
+      - {page: 4, n_rows: 4, n_cols: 2, has_header: true, topic: "reporting cadence"}
+    expected_fields:
+      deadline: null
+      award_min_usd: 25000
+      award_max_usd: 5000000
+      eligibility_keywords:
+        - "tribe"
+        - "nonprofit"
+    notes: "Second Denali program announcement. Update the source URL with the exact program slug."
+
+  - slug: hud-icdbg-nofo
+    source_url: https://www.hud.gov/program_offices/public_indian_housing/ih/grants/icdbg
+    expected_page_count_range: [30, 120]
+    expected_headings:
+      - "Program Description"
+      - "Federal Award Information"
+      - "Eligibility Information"
+      - "Application and Submission Information"
+      - "Application Review Information"
+      - "Federal Award Administration Information"
+      - "Reporting"
+    expected_tables:
+      - {page: 15, n_rows: 8, n_cols: 4, has_header: true, topic: "allocation table"}
+      - {page: 40, n_rows: 6, n_cols: 3, has_header: true, topic: "reporting schedule"}
+    expected_fields:
+      deadline: null
+      award_min_usd: null
+      award_max_usd: 5000000
+      eligibility_keywords:
+        - "federally recognized"
+        - "TDHE"
+        - "tribe"
+    notes: "ICDBG imminent-threat grants can go up to 5M. Long NOFO, expect complex tables."
+
+  - slug: ihs-bh-aide-nofo
+    source_url: https://www.ihs.gov/behavioralhealth/
+    expected_page_count_range: [20, 80]
+    expected_headings:
+      - "Program Description"
+      - "Eligibility"
+      - "Application Instructions"
+      - "Reporting Requirements"
+      - "Award Information"
+    expected_tables:
+      - {page: 10, n_rows: 5, n_cols: 3, has_header: true, topic: "budget categories"}
+    expected_fields:
+      deadline: null
+      award_min_usd: null
+      award_max_usd: null
+      eligibility_keywords:
+        - "tribe"
+        - "tribal organization"
+        - "IHS"
+    notes: "Post-CX-pilot reporting was reduced from 8.9 to 3.2 hours."
+
+  - slug: ahfc-qap
+    source_url: https://www.ahfc.us/pros/grants-financing/low-income-housing-tax-credit
+    expected_page_count_range: [30, 120]
+    expected_headings:
+      - "Qualified Allocation Plan"
+      - "Eligibility"
+      - "Scoring Criteria"
+      - "Reporting Requirements"
+      - "Compliance Monitoring"
+    expected_tables:
+      - {page: 20, n_rows: 10, n_cols: 4, has_header: true, topic: "scoring matrix"}
+      - {page: 45, n_rows: 8, n_cols: 3, has_header: true, topic: "compliance deadlines"}
+    expected_fields:
+      deadline: null
+      award_min_usd: 500000
+      award_max_usd: 10000000
+      eligibility_keywords:
+        - "developer"
+        - "nonprofit"
+        - "Alaska"
+    notes: "The annual QAP. AHFC uses its own portal, not Grants.gov."
+
+  - slug: mshf-healthy-impact-guidelines
+    source_url: https://www.healthymatsu.org/how-we-fund/grant-programs
+    expected_page_count_range: [4, 16]
+    expected_headings:
+      - "Healthy Impact Grants"
+      - "Eligibility"
+      - "Application Process"
+      - "Reporting"
+    expected_tables:
+      - {page: 3, n_rows: 4, n_cols: 2, has_header: true, topic: "funding range"}
+    expected_fields:
+      deadline: null
+      award_min_usd: 25000
+      award_max_usd: null
+      eligibility_keywords:
+        - "501(c)(3)"
+        - "Mat-Su"
+    notes: "Mat-Su Health Foundation Healthy Impact is the larger of their two programs."
+
+  - slug: acf-social-justice-fund
+    source_url: https://alaskacf.org/grants/
+    expected_page_count_range: [3, 12]
+    expected_headings:
+      - "Social Justice Fund"
+      - "Eligibility"
+      - "Application Instructions"
+      - "Reporting"
+    expected_tables: []
+    expected_fields:
+      deadline: null
+      award_min_usd: 2000
+      award_max_usd: 100000
+      eligibility_keywords:
+        - "501(c)(3)"
+        - "Alaska"
+    notes: "ACF competitive fund focused on social justice. Reporting is final only on most awards."
+
+  - slug: epa-ppg-nofo
+    source_url: https://www.epa.gov/grants
+    expected_page_count_range: [20, 80]
+    expected_headings:
+      - "Program Description"
+      - "Eligibility"
+      - "Application Instructions"
+      - "Reporting Requirements"
+      - "Award Information"
+    expected_tables:
+      - {page: 12, n_rows: 6, n_cols: 3, has_header: true, topic: "reporting cadence"}
+    expected_fields:
+      deadline: null
+      award_min_usd: null
+      award_max_usd: null
+      eligibility_keywords:
+        - "tribe"
+        - "tribal"
+        - "EPA"
+    notes: "EPA Tribal Performance Partnership Grants combine multiple grants into a single budget."
