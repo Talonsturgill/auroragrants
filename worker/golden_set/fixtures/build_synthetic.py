@@ -150,7 +150,9 @@ def build_pdf_bytes() -> bytes:
     objs: dict[int, bytes] = {}
     objs[1] = b"<< /Type /Catalog /Pages 2 0 R >>"
     kids = " ".join(f"{pid} 0 R" for pid in page_ids).encode("latin-1")
-    objs[2] = b"<< /Type /Pages /Kids [" + kids + b"] /Count " + str(len(page_ids)).encode() + b" >>"
+    objs[2] = (
+        b"<< /Type /Pages /Kids [" + kids + b"] /Count " + str(len(page_ids)).encode() + b" >>"
+    )
     for pid, cid in zip(page_ids, content_ids, strict=True):
         objs[pid] = (
             f"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] "
@@ -158,11 +160,7 @@ def build_pdf_bytes() -> bytes:
         ).encode("latin-1")
     for cid, stream in zip(content_ids, streams, strict=True):
         objs[cid] = (
-            b"<< /Length "
-            + str(len(stream)).encode()
-            + b" >>\nstream\n"
-            + stream
-            + b"\nendstream"
+            b"<< /Length " + str(len(stream)).encode() + b" >>\nstream\n" + stream + b"\nendstream"
         )
     objs[font_id] = b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"
 
