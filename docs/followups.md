@@ -58,3 +58,10 @@ Severity values: `critical` (security or data loss), `high` (user-facing bug), `
 **Suggested fix:** Add `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, a `GOVERNANCE.md` describing the Indigenous Data Advisory Council, and a self-hosting guide.
 **Cost estimate:** 3 hours.
 **Blocks?:** Public announcement, not Phase 1 acceptance.
+
+## 2026-04-24 — [high] — Phase 2
+
+**Noticed:** Phase 2 ingestion spec requires `documents.parse_status = 'indexed'` and `documents.indexed_at = now()` after chunk+embed completes, but `supabase/migrations/0001_initial.sql` neither defines `indexed_at` nor includes `'indexed'` in the `parse_status` check constraint (valid values: `queued|parsing|parsed|failed`). The ingest worker currently writes `parse_status='indexed'` and `indexed_at=now()`; against a real DB this will fail the check constraint and error on the missing column.
+**Suggested fix:** Add a `0003_indexed_status.sql` migration that (a) drops and re-adds the `parse_status` check constraint with `'indexed'` appended, and (b) adds `indexed_at timestamptz`. Apply before Phase 2 integration testing against a real Supabase.
+**Cost estimate:** 15 minutes.
+**Blocks?:** Phase 2 end-to-end ingestion against a real Supabase instance. Mocked unit tests pass today.

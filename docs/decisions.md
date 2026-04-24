@@ -42,3 +42,10 @@ When Claude Code encounters ambiguity, records the decision here rather than gue
 **Rationale:** The canonical layout in the shipped `.github/workflows/ci.yml` runs `pnpm typecheck` / `pnpm lint` / `pnpm test` / `pnpm build` at repo root with no working-directory override. Moving the web app under `/web/` would have required rewriting CI and every starter import path.
 **Alternatives considered:** Monorepo with `/web/` and `/worker/` siblings. More explicit but requires CI rewrites and is not what the seed layout assumed.
 **Reversible?** Yes. Migration to `/web/` is mechanical if we ever want Turborepo or Nx.
+
+## 2026-04-24 — Phase 2 — Add openai, cohere, supabase, tiktoken to requirements-ci.txt
+
+**Decision:** The ingest and retrieve modules import `openai`, `cohere`, `supabase`, and `tiktoken` at module top-level. These are already pinned in `worker/requirements.txt` at the versions the Phase 2 tests run against. To keep `pytest -q` green in the `worker` CI job without duplicating code with lazy imports, we mirror those pins into `worker/requirements-ci.txt` (openai 1.57.4, cohere 5.13.3, supabase 2.10.0, tiktoken 0.8.0).
+**Rationale:** The tests use respx + mocked clients and never hit a real API, but the modules they import still need the SDK types at import time. Lazy-importing inside every function adds complexity for no observable benefit when respx already isolates the network.
+**Alternatives considered:** (a) Keep requirements-ci.txt minimal and lazy-import each SDK inside functions. Rejected: adds 4 `import` lines per function, fragments mypy types, and costs clarity. (b) Gate tests with `pytest.importorskip` so CI silently skips them. Rejected: the task explicitly requires >=20 tests passing, not skipping.
+**Reversible?** Yes, trivially.
