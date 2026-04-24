@@ -16,10 +16,17 @@
 import { test, expect } from '@playwright/test';
 import { createClient } from '@supabase/supabase-js';
 
-const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const SB_SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
+const SB_SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY ?? '';
+
+const SUPABASE_CONFIGURED = Boolean(SB_URL && SB_SERVICE);
 
 test.describe('tenant isolation', () => {
+  test.skip(
+    !SUPABASE_CONFIGURED,
+    'Supabase env vars not set — run against a live project: NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY',
+  );
+
   const admin = createClient(SB_URL, SB_SERVICE, {
     auth: { persistSession: false },
   });

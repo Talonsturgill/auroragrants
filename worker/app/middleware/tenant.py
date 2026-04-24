@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import os
 import time
-from collections.abc import Callable
+from collections.abc import Awaitable, Callable
 
 import jwt
 from fastapi import Request, Response
@@ -34,7 +34,9 @@ PUBLIC_PATHS = {"/health", "/docs", "/openapi.json", "/redoc"}
 
 
 class TenantContextMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next: Callable) -> Response:
+    async def dispatch(
+        self, request: Request, call_next: Callable[[Request], Awaitable[Response]]
+    ) -> Response:
         if request.url.path in PUBLIC_PATHS:
             return await call_next(request)
 

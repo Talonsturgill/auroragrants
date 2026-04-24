@@ -16,10 +16,10 @@ router = APIRouter()
 
 
 @router.post("/draft-field")
-async def draft_field(request: Request) -> dict:
+async def draft_field(request: Request) -> dict[str, object]:
     raise HTTPException(status_code=501, detail="Implement in Phase 4 using /starter/wce/loop.py")
 
 
 @router.post("/regenerate")
-async def regenerate(request: Request) -> dict:
+async def regenerate(request: Request) -> dict[str, object]:
     raise HTTPException(status_code=501, detail="Implement in Phase 4")

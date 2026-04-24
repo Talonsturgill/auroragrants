@@ -18,15 +18,15 @@ router = APIRouter()
 
 
 @router.post("/marker")
-async def parse_marker(request: Request) -> dict:
+async def parse_marker(request: Request) -> dict[str, object]:
     raise HTTPException(status_code=501, detail="Implement in Phase 2")
 
 
 @router.post("/pdfplumber")
-async def parse_pdfplumber(request: Request) -> dict:
+async def parse_pdfplumber(request: Request) -> dict[str, object]:
     raise HTTPException(status_code=501, detail="Implement in Phase 2")
 
 
 @router.post("/unstructured")
-async def parse_unstructured(request: Request) -> dict:
+async def parse_unstructured(request: Request) -> dict[str, object]:
     raise HTTPException(status_code=501, detail="Implement in Phase 2")
