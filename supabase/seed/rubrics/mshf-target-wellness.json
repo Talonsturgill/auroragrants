@@ -1,0 +1,66 @@
+[
+  {
+    "id": "community_health_focus",
+    "label": "Community health focus",
+    "weight": 0.35,
+    "description": "Describe a specific Mat-Su community health need the short-format project will address.",
+    "scoring": [
+      {"score": 0, "desc": "Health need is generic or not tied to Mat-Su."},
+      {"score": 1, "desc": "Need is specific to Mat-Su but lacks supporting data."},
+      {"score": 2, "desc": "Need is specific, data-supported, and aligned with the foundation's focus areas."}
+    ],
+    "common_failures": [
+      "National statistics without Mat-Su context",
+      "Focus area not aligned with foundation priorities",
+      "No mention of affected population size"
+    ]
+  },
+  {
+    "id": "short_format_clarity",
+    "label": "Short-format clarity",
+    "weight": 0.30,
+    "description": "For a Target Wellness award under $25,000, deliver a concise, specific, outcome-oriented narrative without boilerplate.",
+    "scoring": [
+      {"score": 0, "desc": "Narrative is padded with boilerplate or exceeds concise format expectations."},
+      {"score": 1, "desc": "Narrative is concise but one or two sections drift into general language."},
+      {"score": 2, "desc": "Every section is concise, specific, and outcome oriented with minimal boilerplate."}
+    ],
+    "common_failures": [
+      "Mission-statement filler in the project description",
+      "Generic beneficiary language",
+      "Activities described without outcomes"
+    ]
+  },
+  {
+    "id": "budget_reasonableness",
+    "label": "Budget reasonableness",
+    "weight": 0.20,
+    "description": "Present a line-item budget appropriate for a sub-25k project with clear unit costs.",
+    "scoring": [
+      {"score": 0, "desc": "Budget is a lump sum or mismatched to the scope."},
+      {"score": 1, "desc": "Budget has line items but unit costs are not justified."},
+      {"score": 2, "desc": "Budget ties every line to activities with reasonable unit costs and an appropriate indirect allocation."}
+    ],
+    "common_failures": [
+      "Indirect rate applied to a program too small to support it",
+      "Personnel costs without hour detail",
+      "Supplies lumped without itemization"
+    ]
+  },
+  {
+    "id": "feasibility_and_timeline",
+    "label": "Feasibility and timeline",
+    "weight": 0.15,
+    "description": "Show the project can be completed in the target 12-month window with the requested budget.",
+    "scoring": [
+      {"score": 0, "desc": "Timeline is vague or exceeds the award period."},
+      {"score": 1, "desc": "Timeline fits the window but milestones are thin."},
+      {"score": 2, "desc": "Timeline has monthly or quarterly milestones and a completion plan."}
+    ],
+    "common_failures": [
+      "No milestones",
+      "Timeline that spills past the award period",
+      "No completion or closeout plan"
+    ]
+  }
+]

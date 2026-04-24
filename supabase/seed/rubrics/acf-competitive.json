@@ -1,0 +1,66 @@
+[
+  {
+    "id": "program_quality",
+    "label": "Program quality",
+    "weight": 0.30,
+    "description": "Describe a well-designed program with clear activities, target population, and expected outcomes.",
+    "scoring": [
+      {"score": 0, "desc": "Program design is unclear or outcomes are not stated."},
+      {"score": 1, "desc": "Program design is clear but outcomes are output-level rather than outcome-level."},
+      {"score": 2, "desc": "Program design is evidence-informed, activities map to outcomes, and outcomes are measurable."}
+    ],
+    "common_failures": [
+      "Outputs reported as outcomes",
+      "Activities that do not connect to stated outcomes",
+      "No evidence base or logic model"
+    ]
+  },
+  {
+    "id": "organizational_capacity",
+    "label": "Organizational capacity",
+    "weight": 0.25,
+    "description": "Show the organization has staff, governance, and fiscal systems to execute the program.",
+    "scoring": [
+      {"score": 0, "desc": "Capacity is asserted without evidence."},
+      {"score": 1, "desc": "Capacity is described but key roles are unfilled or track record is limited."},
+      {"score": 2, "desc": "Capacity is documented with named staff, prior performance, and fiscal controls."}
+    ],
+    "common_failures": [
+      "No mention of fiscal oversight",
+      "Key-person dependence",
+      "Missing prior performance data"
+    ]
+  },
+  {
+    "id": "community_need",
+    "label": "Community need",
+    "weight": 0.25,
+    "description": "Document the community need with Alaska-specific data and community voice.",
+    "scoring": [
+      {"score": 0, "desc": "Need is asserted without data or community input."},
+      {"score": 1, "desc": "Need is cited from one source but community voice is not present."},
+      {"score": 2, "desc": "Need is triangulated across data sources and community input."}
+    ],
+    "common_failures": [
+      "National statistics without Alaska context",
+      "No community listening sessions or surveys",
+      "Duplicating existing services"
+    ]
+  },
+  {
+    "id": "budget",
+    "label": "Budget",
+    "weight": 0.20,
+    "description": "Present a line-item budget that is reasonable, allowable, and tied to the scope of work.",
+    "scoring": [
+      {"score": 0, "desc": "Budget is a lump sum or contains unallowable costs."},
+      {"score": 1, "desc": "Budget has line items but justifications are thin."},
+      {"score": 2, "desc": "Budget ties every line to activities with justified unit costs and a clear match story if required."}
+    ],
+    "common_failures": [
+      "Missing budget narrative",
+      "Unallowable costs such as lobbying or entertainment",
+      "Indirect rate not stated"
+    ]
+  }
+]

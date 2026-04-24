@@ -1,0 +1,66 @@
+[
+  {
+    "id": "project_need",
+    "label": "Project need",
+    "weight": 0.25,
+    "description": "Document the community development need the project addresses, consistent with the ICDBG national objectives.",
+    "scoring": [
+      {"score": 0, "desc": "Need is asserted without tribal community data."},
+      {"score": 1, "desc": "Need is described but not linked to a specific national objective."},
+      {"score": 2, "desc": "Need is data-supported and clearly linked to a national objective and tribal priorities."}
+    ],
+    "common_failures": [
+      "No tribal needs assessment referenced",
+      "Mismatch between need and national objective",
+      "Outdated census or community data"
+    ]
+  },
+  {
+    "id": "low_mod_benefit",
+    "label": "Benefit to low- and moderate-income persons",
+    "weight": 0.25,
+    "description": "Quantify how the project benefits low- and moderate-income tribal members at or above the required threshold.",
+    "scoring": [
+      {"score": 0, "desc": "Beneficiary counts do not meet the low-mod threshold or documentation is absent."},
+      {"score": 1, "desc": "Beneficiary counts meet the threshold but methodology is thin."},
+      {"score": 2, "desc": "Beneficiary counts exceed the threshold with a documented methodology and income data."}
+    ],
+    "common_failures": [
+      "No income documentation methodology",
+      "Service area does not match beneficiary count",
+      "Area benefit claimed without supporting data"
+    ]
+  },
+  {
+    "id": "project_feasibility",
+    "label": "Project feasibility",
+    "weight": 0.25,
+    "description": "Show the project can be completed on the proposed schedule with a realistic budget, environmental review, and procurement plan.",
+    "scoring": [
+      {"score": 0, "desc": "Schedule, environmental review, or procurement plan is missing."},
+      {"score": 1, "desc": "Plan is plausible but environmental review or procurement approach has gaps."},
+      {"score": 2, "desc": "Schedule is realistic, environmental review path is identified, and procurement is aligned with 2 CFR Part 200."}
+    ],
+    "common_failures": [
+      "No NEPA or tribal environmental path identified",
+      "Procurement not aligned with 2 CFR Part 200",
+      "Schedule ignores Alaska construction season"
+    ]
+  },
+  {
+    "id": "management_capacity",
+    "label": "Management capacity",
+    "weight": 0.25,
+    "description": "Demonstrate the tribe or TDHE has staff, policies, and federal award history to manage an ICDBG award.",
+    "scoring": [
+      {"score": 0, "desc": "Applicant has no prior federal award or has unresolved findings."},
+      {"score": 1, "desc": "Applicant has prior experience but policies or staff are not fully in place."},
+      {"score": 2, "desc": "Applicant has prior ICDBG or comparable federal experience, clean audits, and named grant management staff."}
+    ],
+    "common_failures": [
+      "Unresolved single-audit findings",
+      "No written procurement policy",
+      "No named grant manager"
+    ]
+  }
+]

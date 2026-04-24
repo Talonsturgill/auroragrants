@@ -1,0 +1,66 @@
+[
+  {
+    "id": "organizational_capacity",
+    "label": "Organizational capacity",
+    "weight": 0.25,
+    "description": "Demonstrate that the organization has the staff, governance, and history to execute the proposed work.",
+    "scoring": [
+      {"score": 0, "desc": "Capacity is asserted without evidence or the organization has no relevant track record."},
+      {"score": 1, "desc": "Capacity is described with some staffing and governance detail but key roles are unfilled or unproven."},
+      {"score": 2, "desc": "Capacity is documented with named staff, relevant prior awards, and board oversight appropriate to the award size."}
+    ],
+    "common_failures": [
+      "Boilerplate staff bios that do not tie to project roles",
+      "No mention of board or fiscal oversight",
+      "Relying on volunteers for critical delivery without contingency"
+    ]
+  },
+  {
+    "id": "project_feasibility",
+    "label": "Project feasibility",
+    "weight": 0.25,
+    "description": "Show the project can be completed within the proposed timeline, budget, and scope using realistic methods.",
+    "scoring": [
+      {"score": 0, "desc": "Timeline or method is vague and key dependencies are unaddressed."},
+      {"score": 1, "desc": "Timeline and method are plausible but one or two major risks are not mitigated."},
+      {"score": 2, "desc": "Timeline, method, milestones, and risk mitigations are explicit and internally consistent."}
+    ],
+    "common_failures": [
+      "Milestones without dates",
+      "No contingency for Alaska weather or shipping delays",
+      "Scope expansion beyond the award budget"
+    ]
+  },
+  {
+    "id": "community_impact",
+    "label": "Community impact",
+    "weight": 0.25,
+    "description": "Describe measurable impact on Alaska communities that the project will create.",
+    "scoring": [
+      {"score": 0, "desc": "Impact is vague or not measurable."},
+      {"score": 1, "desc": "Impact is specific but affects a small population or lacks baseline data."},
+      {"score": 2, "desc": "Impact is specific, measurable, and affects a significant Alaska population with a clear theory of change."}
+    ],
+    "common_failures": [
+      "Boilerplate language without quantified beneficiaries",
+      "Missing baseline data",
+      "No post-project measurement plan"
+    ]
+  },
+  {
+    "id": "budget_appropriateness",
+    "label": "Budget appropriateness",
+    "weight": 0.25,
+    "description": "Show that requested funds are reasonable, allowable, and matched to the scope of work.",
+    "scoring": [
+      {"score": 0, "desc": "Budget is a lump sum with no line items or contains unallowable costs."},
+      {"score": 1, "desc": "Budget has line items but unit costs or justifications are thin."},
+      {"score": 2, "desc": "Budget ties every line to a project activity with reasonable unit costs and a clear match or leverage story."}
+    ],
+    "common_failures": [
+      "No per-unit cost breakdown",
+      "Indirect rate not stated or not justified",
+      "Personnel hours that do not reconcile with the work plan"
+    ]
+  }
+]

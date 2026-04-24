@@ -1,0 +1,82 @@
+[
+  {
+    "id": "qap_technical_score",
+    "label": "QAP technical score",
+    "weight": 0.40,
+    "description": "Meet the technical scoring categories in the Alaska Qualified Allocation Plan for the program year. Exact criteria vary year-to-year per the current QAP.",
+    "scoring": [
+      {"score": 0, "desc": "Application misses several QAP scoring categories or has disqualifying omissions."},
+      {"score": 1, "desc": "Application covers most QAP categories but leaves points on the table in areas such as targeting or amenities."},
+      {"score": 2, "desc": "Application maximizes QAP points in targeting, amenities, and service commitments relevant to the current QAP."}
+    ],
+    "common_failures": [
+      "Referencing a prior-year QAP",
+      "Missing tenant-service commitments",
+      "Targeting set-asides that do not match the QAP categories"
+    ]
+  },
+  {
+    "id": "development_team_experience",
+    "label": "Development team experience",
+    "weight": 0.20,
+    "description": "Show a developer, architect, and general contractor team with Alaska affordable-housing experience.",
+    "scoring": [
+      {"score": 0, "desc": "Team lacks Alaska affordable-housing experience."},
+      {"score": 1, "desc": "Team has Alaska experience but limited at the proposed scale."},
+      {"score": 2, "desc": "Team has multiple comparable Alaska projects delivered on time and on budget."}
+    ],
+    "common_failures": [
+      "General contractor never bonded in Alaska",
+      "Architect without cold-climate multifamily experience",
+      "No named property management entity"
+    ]
+  },
+  {
+    "id": "financial_feasibility",
+    "label": "Financial feasibility",
+    "weight": 0.20,
+    "description": "Present sources-and-uses, debt-service coverage, and operating pro-forma that pencil for a 15-year compliance period.",
+    "scoring": [
+      {"score": 0, "desc": "Pro-forma does not meet minimum DSCR or has unrealistic operating assumptions."},
+      {"score": 1, "desc": "Pro-forma meets minimum DSCR but vacancy or operating cost assumptions are thin."},
+      {"score": 2, "desc": "Pro-forma meets DSCR with defensible operating assumptions, replacement reserves, and stress-tested vacancy."}
+    ],
+    "common_failures": [
+      "Vacancy assumption below Alaska rural norms",
+      "No replacement reserves",
+      "Utility allowances inconsistent with local PHA schedule"
+    ]
+  },
+  {
+    "id": "site_and_community_fit",
+    "label": "Site and community fit",
+    "weight": 0.10,
+    "description": "Document site control, zoning, utilities, and community support including local government and tribal partners where applicable.",
+    "scoring": [
+      {"score": 0, "desc": "Site control is not evidenced or community support is absent."},
+      {"score": 1, "desc": "Site control exists but community support letters are generic."},
+      {"score": 2, "desc": "Site is controlled, zoned, and has active community and tribal or local-government support documented in writing."}
+    ],
+    "common_failures": [
+      "Option-to-purchase expiring before construction start",
+      "No municipal or tribal coordination",
+      "Utility capacity not verified"
+    ]
+  },
+  {
+    "id": "long_term_affordability",
+    "label": "Long-term affordability and services",
+    "weight": 0.10,
+    "description": "Commit to deeper affordability, longer compliance periods, or on-site supportive services beyond QAP minimums.",
+    "scoring": [
+      {"score": 0, "desc": "No commitments beyond QAP minimums."},
+      {"score": 1, "desc": "One commitment beyond minimums but not memorialized in a restrictive covenant."},
+      {"score": 2, "desc": "Multiple commitments beyond minimums memorialized in the LURA or service agreements with community providers."}
+    ],
+    "common_failures": [
+      "Service commitments without a service provider MOU",
+      "Affordability term only at QAP minimum",
+      "No resident services budget"
+    ]
+  }
+]

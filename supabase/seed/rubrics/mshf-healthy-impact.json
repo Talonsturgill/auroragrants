@@ -1,0 +1,66 @@
+[
+  {
+    "id": "community_health_outcomes",
+    "label": "Community health outcomes",
+    "weight": 0.30,
+    "description": "Describe measurable improvements in Mat-Su community health with baseline data and a measurement plan.",
+    "scoring": [
+      {"score": 0, "desc": "Health outcomes are not defined or not measurable."},
+      {"score": 1, "desc": "Outcomes are defined for a specific population but baseline or measurement plan is missing."},
+      {"score": 2, "desc": "Outcomes are specific, measurable, grounded in Mat-Su health data, and have a post-project measurement plan."}
+    ],
+    "common_failures": [
+      "National statistics substituted for Mat-Su data",
+      "Activities reported as outcomes",
+      "No measurement beyond the award period"
+    ]
+  },
+  {
+    "id": "project_feasibility",
+    "label": "Project feasibility",
+    "weight": 0.25,
+    "description": "Show the project can be executed on the proposed timeline with realistic staffing and methods.",
+    "scoring": [
+      {"score": 0, "desc": "Timeline or staffing plan is unrealistic."},
+      {"score": 1, "desc": "Plan is plausible but a major risk such as staffing or rural access is unmitigated."},
+      {"score": 2, "desc": "Timeline, staffing, and risk mitigations are explicit and consistent with Mat-Su operating realities."}
+    ],
+    "common_failures": [
+      "Staffing plan assumes urban hiring pools",
+      "No contingency for rural transport or weather",
+      "Milestones without dates"
+    ]
+  },
+  {
+    "id": "budget_reasonableness",
+    "label": "Budget reasonableness",
+    "weight": 0.20,
+    "description": "Present a line-item budget that is reasonable, allowable, and tied to the scope of work.",
+    "scoring": [
+      {"score": 0, "desc": "Budget is a lump sum or contains unallowable costs."},
+      {"score": 1, "desc": "Budget has line items but unit costs or personnel allocations are not justified."},
+      {"score": 2, "desc": "Budget ties every line to activities with justified unit costs and a clear indirect rate."}
+    ],
+    "common_failures": [
+      "Personnel hours do not reconcile with the work plan",
+      "Indirect rate not stated",
+      "Equipment costs without quotes"
+    ]
+  },
+  {
+    "id": "community_partnership",
+    "label": "Community partnership",
+    "weight": 0.25,
+    "description": "Show partnerships with Mat-Su health, tribal, school, or social-service organizations with documented roles.",
+    "scoring": [
+      {"score": 0, "desc": "Partners are named but roles are unclear or letters are generic."},
+      {"score": 1, "desc": "Partners have defined roles but no signed MOUs."},
+      {"score": 2, "desc": "Partners have signed MOUs, defined roles, and a shared governance or communication plan."}
+    ],
+    "common_failures": [
+      "Partner letters that are general endorsements",
+      "Partners with no resource or role commitment",
+      "Missing tribal partner for projects serving tribal citizens"
+    ]
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "community_impact",
+    "label": "Community impact",
+    "weight": 0.20,
+    "description": "Articulate significant, measurable impact on Alaska communities commensurate with a Legacy-scale award.",
+    "scoring": [
+      {"score": 0, "desc": "Impact is aspirational and not tied to measurable outcomes."},
+      {"score": 1, "desc": "Impact is described for a specific population but outcomes are output-level not outcome-level."},
+      {"score": 2, "desc": "Impact includes baseline data, quantified beneficiaries, and a theory of change with evaluation plan."}
+    ],
+    "common_failures": [
+      "Impact framed as activities rather than outcomes",
+      "No baseline or counterfactual",
+      "Beneficiary counts without demographic detail"
+    ]
+  },
+  {
+    "id": "organizational_capacity",
+    "label": "Organizational capacity",
+    "weight": 0.17,
+    "description": "Demonstrate leadership, staffing, and governance capable of stewarding a multi-year, high-dollar award.",
+    "scoring": [
+      {"score": 0, "desc": "Organization has limited track record at this scale and leadership plan is thin."},
+      {"score": 1, "desc": "Organization has managed awards of similar scope but succession or key-person risk is unaddressed."},
+      {"score": 2, "desc": "Organization has clear track record at scale, named leadership, succession plans, and board oversight."}
+    ],
+    "common_failures": [
+      "No prior awards at comparable scale",
+      "Key-person dependence with no backup",
+      "Board not engaged with the initiative"
+    ]
+  },
+  {
+    "id": "financial_management",
+    "label": "Financial management",
+    "weight": 0.17,
+    "description": "Show audited financials, internal controls, and ability to manage large draw-downs and reporting.",
+    "scoring": [
+      {"score": 0, "desc": "No audit, qualified audit, or material control weaknesses."},
+      {"score": 1, "desc": "Clean audit but limited experience managing awards of this size."},
+      {"score": 2, "desc": "Clean audit, documented internal controls, and prior experience drawing down federal or large foundation funds."}
+    ],
+    "common_failures": [
+      "Missing or dated audit",
+      "No segregation of duties",
+      "Indirect cost rate undocumented"
+    ]
+  },
+  {
+    "id": "community_partnerships",
+    "label": "Community partnerships",
+    "weight": 0.17,
+    "description": "Document meaningful partnerships with community, tribal, government, or peer organizations that will co-deliver the work.",
+    "scoring": [
+      {"score": 0, "desc": "Partners are named but roles and commitments are unclear."},
+      {"score": 1, "desc": "Partners have defined roles but no MOUs or letters of support attached."},
+      {"score": 2, "desc": "Partners have signed MOUs or letters, clear roles, and shared decision-making structures."}
+    ],
+    "common_failures": [
+      "Partner letters that are generic endorsements",
+      "No tribal consultation for projects in tribal communities",
+      "Partner roles that duplicate applicant roles"
+    ]
+  },
+  {
+    "id": "feasibility_sustainability",
+    "label": "Project feasibility and sustainability",
+    "weight": 0.17,
+    "description": "Show the project is executable on the proposed timeline and that outcomes persist beyond the award period.",
+    "scoring": [
+      {"score": 0, "desc": "Timeline is aggressive and no post-award sustainability plan exists."},
+      {"score": 1, "desc": "Timeline is credible but sustainability relies on a single uncommitted funding source."},
+      {"score": 2, "desc": "Timeline is credible with milestones and sustainability is diversified across revenue, partnerships, or policy change."}
+    ],
+    "common_failures": [
+      "Sustainability plan is a future grant application",
+      "No operations and maintenance plan for capital projects",
+      "Unrealistic ramp for earned revenue"
+    ]
+  },
+  {
+    "id": "alignment_with_needs",
+    "label": "Alignment with community and state needs",
+    "weight": 0.12,
+    "description": "Connect the project to documented Alaska community priorities and state-level needs assessments.",
+    "scoring": [
+      {"score": 0, "desc": "Needs are asserted without citation."},
+      {"score": 1, "desc": "Needs are cited from one source but community voice is not present."},
+      {"score": 2, "desc": "Needs are triangulated across community input, data sources, and state or regional plans."}
+    ],
+    "common_failures": [
+      "Quoting national statistics without Alaska-specific data",
+      "No community voice or listening sessions cited",
+      "Duplicating existing services without a gap analysis"
+    ]
+  }
+]

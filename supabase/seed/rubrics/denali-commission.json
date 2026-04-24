@@ -1,0 +1,82 @@
+[
+  {
+    "id": "infrastructure_need",
+    "label": "Infrastructure need",
+    "weight": 0.25,
+    "description": "Document the infrastructure, energy, or workforce gap the project closes for a rural Alaska community.",
+    "scoring": [
+      {"score": 0, "desc": "Need is asserted without community or engineering data."},
+      {"score": 1, "desc": "Need is described with one data source but no community corroboration."},
+      {"score": 2, "desc": "Need is documented with engineering or energy assessments and community input."}
+    ],
+    "common_failures": [
+      "No engineering scope or energy baseline",
+      "Missing community resolution of support",
+      "Duplication of existing infrastructure"
+    ]
+  },
+  {
+    "id": "project_readiness",
+    "label": "Project readiness",
+    "weight": 0.25,
+    "description": "Show site control, permits, engineering design stage, and procurement readiness.",
+    "scoring": [
+      {"score": 0, "desc": "Project is conceptual with no design or permits."},
+      {"score": 1, "desc": "Design is underway but permits or site control are pending."},
+      {"score": 2, "desc": "Design is at 65 percent or higher, permits are in hand or on a clear timeline, and site control is documented."}
+    ],
+    "common_failures": [
+      "Design at concept stage only",
+      "No permits identified",
+      "Procurement approach not described"
+    ]
+  },
+  {
+    "id": "organizational_capacity",
+    "label": "Organizational capacity",
+    "weight": 0.20,
+    "description": "Show the tribe, local government, or nonprofit has the capacity to manage a federal award and construction.",
+    "scoring": [
+      {"score": 0, "desc": "Applicant has no prior federal award or construction experience."},
+      {"score": 1, "desc": "Applicant has prior experience but not at this scale."},
+      {"score": 2, "desc": "Applicant has prior federal awards at comparable scale with clean audits and a named project manager."}
+    ],
+    "common_failures": [
+      "No single-audit compliance history",
+      "Construction experience subcontracted without oversight",
+      "No full-time project manager"
+    ]
+  },
+  {
+    "id": "budget_and_leverage",
+    "label": "Budget and leverage",
+    "weight": 0.15,
+    "description": "Present a reasonable cost estimate with identified leverage from state, tribal, or other federal sources.",
+    "scoring": [
+      {"score": 0, "desc": "Budget has no leverage or leverage is uncommitted."},
+      {"score": 1, "desc": "Leverage is identified but letters are pending."},
+      {"score": 2, "desc": "Leverage is committed in writing with match amounts and timing."}
+    ],
+    "common_failures": [
+      "Match listed as pending",
+      "No cost-estimate basis",
+      "Uncontingent contingency missing for Alaska construction"
+    ]
+  },
+  {
+    "id": "sustainability_and_om",
+    "label": "Sustainability and operations and maintenance",
+    "weight": 0.15,
+    "description": "Describe how the asset will be operated and maintained after the award period with a funded O&M plan.",
+    "scoring": [
+      {"score": 0, "desc": "No O&M plan or identified operator."},
+      {"score": 1, "desc": "O&M plan exists but funding source is uncertain."},
+      {"score": 2, "desc": "O&M plan has an identified operator, funding source, and training plan for local staff."}
+    ],
+    "common_failures": [
+      "O&M funded only by anticipated user fees",
+      "No operator identified",
+      "No local workforce training component"
+    ]
+  }
+]

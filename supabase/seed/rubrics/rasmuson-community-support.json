@@ -1,0 +1,66 @@
+[
+  {
+    "id": "organizational_capacity",
+    "label": "Organizational capacity",
+    "weight": 0.25,
+    "description": "Show the organization has staffing, governance, and financial systems to manage a mid-range capital or program award.",
+    "scoring": [
+      {"score": 0, "desc": "Capacity is asserted without evidence or key roles are unfilled."},
+      {"score": 1, "desc": "Capacity is described but track record at this scale is limited."},
+      {"score": 2, "desc": "Capacity is documented with relevant prior awards, staffing, and financial controls appropriate to the award size."}
+    ],
+    "common_failures": [
+      "No prior grants of comparable size",
+      "Staffing plan does not align with project scope",
+      "Board not engaged with the project"
+    ]
+  },
+  {
+    "id": "project_feasibility",
+    "label": "Project feasibility",
+    "weight": 0.25,
+    "description": "Demonstrate the project can be executed on the proposed timeline and budget with realistic methods.",
+    "scoring": [
+      {"score": 0, "desc": "Timeline, method, or site readiness is unclear."},
+      {"score": 1, "desc": "Plan is plausible but missing mitigation for a key risk such as construction cost escalation or staffing."},
+      {"score": 2, "desc": "Timeline, method, milestones, and risk mitigations are explicit and site or program readiness is documented."}
+    ],
+    "common_failures": [
+      "No construction cost contingency for capital projects",
+      "Staffing plan ignores Alaska hiring realities",
+      "No permits or site-control evidence"
+    ]
+  },
+  {
+    "id": "community_impact",
+    "label": "Community impact",
+    "weight": 0.25,
+    "description": "Quantify the benefit to a defined Alaska community and the mechanism by which the project delivers that benefit.",
+    "scoring": [
+      {"score": 0, "desc": "Impact is vague or not measurable."},
+      {"score": 1, "desc": "Impact is specific but baseline or measurement approach is missing."},
+      {"score": 2, "desc": "Impact is specific, measurable, and tied to baseline data with a stated measurement plan."}
+    ],
+    "common_failures": [
+      "Beneficiary counts without demographics",
+      "No measurement plan for outcomes",
+      "Impact described only as activities"
+    ]
+  },
+  {
+    "id": "budget_and_leverage",
+    "label": "Budget and leverage",
+    "weight": 0.25,
+    "description": "Present a reasonable line-item budget with documented match or leverage from other funders, in-kind, or earned revenue.",
+    "scoring": [
+      {"score": 0, "desc": "Budget is a lump sum or contains unallowable costs, and leverage is unstated."},
+      {"score": 1, "desc": "Budget has line items but leverage is uncommitted or speculative."},
+      {"score": 2, "desc": "Budget is itemized, costs are justified, and leverage is committed in writing."}
+    ],
+    "common_failures": [
+      "Match listed as pending without letters",
+      "Indirect rate not stated",
+      "Line items that do not tie to the work plan"
+    ]
+  }
+]

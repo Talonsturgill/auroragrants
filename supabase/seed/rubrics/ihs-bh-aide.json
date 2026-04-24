@@ -1,0 +1,66 @@
+[
+  {
+    "id": "programmatic_alignment",
+    "label": "Programmatic alignment",
+    "weight": 0.30,
+    "description": "Align the proposed Behavioral Health Aide program with the IHS BHA model, tribal health priorities, and local community needs.",
+    "scoring": [
+      {"score": 0, "desc": "Program design does not follow the BHA model or skips certification pathways."},
+      {"score": 1, "desc": "Program follows the BHA model but community alignment is thin."},
+      {"score": 2, "desc": "Program follows the BHA model, maps to tribal health plan priorities, and has community endorsement."}
+    ],
+    "common_failures": [
+      "Skipping BHA certification pathway",
+      "No tribal health plan reference",
+      "No community council resolution"
+    ]
+  },
+  {
+    "id": "workforce_pipeline",
+    "label": "Workforce pipeline",
+    "weight": 0.30,
+    "description": "Describe a recruitment, training, supervision, and retention plan that builds a sustainable BHA workforce.",
+    "scoring": [
+      {"score": 0, "desc": "No recruitment or retention plan."},
+      {"score": 1, "desc": "Recruitment plan exists but supervision or retention is not addressed."},
+      {"score": 2, "desc": "Plan covers recruitment, training, clinical supervision, retention, and advancement from BHA I to BHA III."}
+    ],
+    "common_failures": [
+      "No clinical supervision plan",
+      "No retention strategy",
+      "Training costs omitted from the budget"
+    ]
+  },
+  {
+    "id": "outcomes_measurement",
+    "label": "Outcomes measurement",
+    "weight": 0.20,
+    "description": "Define behavioral health outcomes, indicators, data sources, and a reporting cadence that matches IHS expectations.",
+    "scoring": [
+      {"score": 0, "desc": "Outcomes are not defined or data sources are absent."},
+      {"score": 1, "desc": "Outcomes are defined but measurement is output-level only."},
+      {"score": 2, "desc": "Outcomes are specific, indicator-mapped, and measurable with named data sources and cadence."}
+    ],
+    "common_failures": [
+      "Visit counts reported as outcomes",
+      "No EHR or data system identified",
+      "No baseline measurement"
+    ]
+  },
+  {
+    "id": "organizational_capacity",
+    "label": "Organizational capacity",
+    "weight": 0.20,
+    "description": "Show the tribal health organization has clinical infrastructure, compliance systems, and prior IHS or federal experience.",
+    "scoring": [
+      {"score": 0, "desc": "Applicant lacks clinical infrastructure or has unresolved compliance issues."},
+      {"score": 1, "desc": "Applicant has infrastructure but limited IHS program history."},
+      {"score": 2, "desc": "Applicant has existing clinical infrastructure, prior IHS awards, and clean compliance history."}
+    ],
+    "common_failures": [
+      "Unresolved audit findings",
+      "No EHR integration plan",
+      "No behavioral health leadership named"
+    ]
+  }
+]
