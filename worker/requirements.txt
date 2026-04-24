@@ -8,7 +8,7 @@ pydantic==2.10.3
 pydantic-settings==2.6.1
 
 # HTTP
-httpx==0.28.1
+httpx==0.27.2
 
 # LLM clients
 anthropic==0.40.0
@@ -32,7 +32,7 @@ tiktoken==0.8.0
 jsonschema==4.23.0
 
 # Evals / retrieval helpers
-numpy==2.2.0
+numpy==1.26.4
 scipy==1.14.1
 scikit-learn==1.6.0
 
