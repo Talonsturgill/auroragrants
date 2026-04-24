@@ -1,0 +1,66 @@
+# Node / Next.js
+node_modules/
+.next/
+out/
+dist/
+build/
+.vercel
+.turbo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Env
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Editors
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
+
+# Build artifacts
+*.tsbuildinfo
+next-env.d.ts
+
+# Playwright
+playwright-report/
+test-results/
+blob-report/
+
+# Fly.io
+.fly/
+
+# Sensitive seed data — keep structure, ignore content
+supabase/seed/funder_docs/*.pdf
+!supabase/seed/funder_docs/.gitkeep
+
+# Tenant exports
+exports/
+
+# Local dev state
+.claude/
+.supabase-setup-token
