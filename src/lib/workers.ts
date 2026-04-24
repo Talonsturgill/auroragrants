@@ -13,6 +13,13 @@
 import { SignJWT } from "jose";
 
 import type {
+  DraftContext,
+  DraftResponse,
+  EvalGateParams,
+  EvalGateRequest,
+  EvalGateResponse,
+} from "@/lib/types/draft";
+import type {
   ExtractRequirementsRequest,
   ExtractRequirementsResponse,
   IngestRequest,
@@ -174,5 +181,65 @@ export async function extractRequirements(
     // 60-page award letter.
     timeoutMs: 90_000,
     extraClaims: { award_id: awardId },
+  });
+}
+
+/**
+ * Phase 4: run the Writer-Critic-Editor loop on a single report_field.
+ *
+ * The worker runs retrieval, Writer, Critic, and Editor (see
+ * /starter/wce/loop.py) and returns the final draft, citations, critique,
+ * wce trace, and a surface_decision of "surface" | "surface_with_flag" |
+ * "block". The orchestrator is responsible for writing a `drafts` row and
+ * flipping `report_fields.draft_status`.
+ *
+ * A 30-second HTTP timeout covers a typical 1-to-3 iteration run. The worker
+ * caps WCE iterations at 5 internally; long runs are expected to return
+ * within the timeout because individual LLM calls stream fast.
+ */
+export async function draftReportField(
+  fieldId: string,
+  context: DraftContext,
+  tenantId: string,
+): Promise<DraftResponse> {
+  const body = {
+    tenant_id: tenantId,
+    ...context,
+    report_field_id: fieldId,
+  };
+  return workerPost<DraftResponse>({
+    tenantId,
+    path: "/wce/draft-field",
+    body,
+    timeoutMs: 30_000,
+    extraClaims: { report_field_id: fieldId },
+  });
+}
+
+/**
+ * Phase 4: run the pre-surface evaluation gate against a completed draft.
+ *
+ * Returns the five check scores (factuality, rubric_adherence,
+ * hallucinated_programs, readability, word_count_compliance), a boolean
+ * `passed` summary, and a list of failures with thresholds. A draft that
+ * fails the gate must NOT be surfaced to the user.
+ */
+export async function runEvalGate(
+  params: EvalGateParams,
+  tenantId: string,
+): Promise<EvalGateResponse> {
+  const body: EvalGateRequest = {
+    report_field_id: params.report_field_id,
+    draft: params.draft,
+    retrieved_chunks: params.retrieved_chunks,
+    funder: params.funder,
+    field: params.field,
+  };
+  return workerPost<EvalGateResponse>({
+    tenantId,
+    path: "/evals/gate",
+    body,
+    timeoutMs: 30_000,
+    extraClaims: { report_field_id: params.report_field_id },
   });
 }
