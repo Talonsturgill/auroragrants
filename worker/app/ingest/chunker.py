@@ -144,12 +144,13 @@ class Chunker:
                 cursor = end if end > cursor else cursor + 1
                 continue
 
-            # Dedup consecutive identical chunks (can happen when a tail block
-            # is smaller than the overlap and the next window just repeats it).
-            if chunks and chunks[-1].content == content:
-                break
-
             char_start, char_end = self._char_span(markdown, content, chunks)
+
+            # Dedup: stop if we can't advance past the previous chunk's position.
+            # Using char position rather than content equality avoids false-positive
+            # dedup on repetitive text (e.g. "alpha " * 4000).
+            if chunks and char_start <= chunks[-1].char_start:
+                break
             page_start, page_end = _map_pages(char_start, char_end, page_index)
             section_heading = self._heading_for_offset(char_start, heading_index)
             token_count = len(window_tokens)

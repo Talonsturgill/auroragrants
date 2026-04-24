@@ -26,3 +26,4 @@ openai==1.57.4
 cohere==5.13.3
 supabase==2.10.0
 tiktoken==0.8.0
+pdfplumber==0.11.9
