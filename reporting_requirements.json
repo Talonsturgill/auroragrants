@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReportingRequirements",
+  "description": "Structured extraction output from a NOFO or award letter.",
+  "type": "object",
+  "required": ["award_summary", "reports", "citations", "uncertainties"],
+  "properties": {
+    "award_summary": {
+      "type": "object",
+      "required": ["program_name", "funder_name", "award_min_usd", "award_max_usd"],
+      "properties": {
+        "program_name": { "type": "string" },
+        "funder_name": { "type": "string" },
+        "award_min_usd": { "type": ["integer", "null"] },
+        "award_max_usd": { "type": ["integer", "null"] },
+        "period_months": { "type": ["integer", "null"] },
+        "cfda_number": { "type": ["string", "null"] },
+        "eligibility_summary": { "type": "string" }
+      }
+    },
+    "reports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "report_type", "due_offset_days", "period_months", "format", "narrative_sections"],
+        "properties": {
+          "title": { "type": "string" },
+          "report_type": {
+            "type": "string",
+            "enum": ["progress", "final", "financial", "sf425", "ppr", "narrative", "programmatic"]
+          },
+          "due_offset_days": {
+            "type": "integer",
+            "description": "Days after period_end the report is due."
+          },
+          "period_months": {
+            "type": "integer",
+            "description": "Length of the reporting period in months."
+          },
+          "format": {
+            "type": "string",
+            "enum": ["portal", "email", "pdf", "docx", "grants_gov"]
+          },
+          "narrative_sections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["key", "label", "required", "field_type"],
+              "properties": {
+                "key": { "type": "string" },
+                "label": { "type": "string" },
+                "field_type": {
+                  "type": "string",
+                  "enum": ["narrative", "number", "currency", "percentage", "date", "select", "multiselect", "table"]
+                },
+                "required": { "type": "boolean" },
+                "word_count_max": { "type": ["integer", "null"] },
+                "word_count_min": { "type": ["integer", "null"] },
+                "description": { "type": ["string", "null"] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["field", "page", "quote"],
+        "properties": {
+          "field": { "type": "string", "description": "Dot-path of the extracted field, e.g. reports.0.due_offset_days" },
+          "page": { "type": "integer" },
+          "quote": { "type": "string" }
+        }
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "description": "Fields the extractor could not confidently populate. Each entry explains why.",
+      "items": {
+        "type": "object",
+        "required": ["field", "reason"],
+        "properties": {
+          "field": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    }
+  }
+}
