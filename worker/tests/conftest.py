@@ -21,16 +21,21 @@ import pytest
 
 
 def _tiktoken_available() -> bool:
-    """Probe whether tiktoken can load `cl100k_base`.
+    """Probe whether tiktoken can load `cl100k_base` AND actually encode.
 
     CI sometimes cannot reach `openaipublic.blob.core.windows.net` (sandbox
     or transient network issues). If the encoding cannot be fetched and is
     not cached, tests that depend on it will be skipped rather than errored.
+
+    We call `.encode()` to force the lazy BPE download — `get_encoding` alone
+    may return an Encoding object without triggering the network call.
     """
     try:
         import tiktoken
 
-        tiktoken.get_encoding("cl100k_base")
+        enc = tiktoken.get_encoding("cl100k_base")
+        # Force actual BPE load by encoding a trivial string.
+        enc.encode("probe")
         return True
     except Exception:
         return False
