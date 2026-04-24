@@ -31,3 +31,7 @@ pdfplumber==0.11.9
 # Phase 3: structured extraction
 anthropic==0.42.0
 jsonschema==4.23.0
+
+# Phase 4: export renderers
+weasyprint==63.1
+python-docx==1.1.2
