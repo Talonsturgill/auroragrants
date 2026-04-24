@@ -24,7 +24,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app.middleware.tenant import TenantContextMiddleware
-from app.routes import evals, health, ingest, parse, retrieve, wce
+from app.routes import evals, extract, health, ingest, parse, retrieve, wce
 
 
 def _init_sentry() -> None:
@@ -59,6 +59,7 @@ app.include_router(wce.router, prefix="/wce", tags=["wce"])
 app.include_router(evals.router, prefix="/evals", tags=["evals"])
 app.include_router(ingest.router, prefix="/ingest", tags=["ingest"])
 app.include_router(retrieve.router, prefix="/retrieve", tags=["retrieve"])
+app.include_router(extract.router, prefix="/extract", tags=["extract"])
 
 
 @app.exception_handler(Exception)

@@ -27,3 +27,7 @@ cohere==5.13.3
 supabase==2.10.0
 tiktoken==0.8.0
 pdfplumber==0.11.9
+
+# Phase 3: structured extraction
+anthropic==0.42.0
+jsonschema==4.23.0
