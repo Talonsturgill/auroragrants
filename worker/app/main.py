@@ -16,15 +16,15 @@ This file is a skeleton. Claude Code fills in the route handlers per the specs.
 from __future__ import annotations
 
 import os
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import AsyncIterator
 
 import sentry_sdk
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app.middleware.tenant import TenantContextMiddleware
-from app.routes import parse, wce, evals, health
+from app.routes import evals, health, parse, wce
 
 
 def _init_sentry() -> None:

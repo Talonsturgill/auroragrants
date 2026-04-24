@@ -15,7 +15,9 @@ router = APIRouter()
 
 @router.post("/run")
 async def run_evals(request: Request) -> dict:
-    raise HTTPException(status_code=501, detail="Implement in Phase 4 using /starter/evals/harness.py")
+    raise HTTPException(
+        status_code=501, detail="Implement in Phase 4 using /starter/evals/harness.py"
+    )
 
 
 @router.get("/drift/{tenant_id}")

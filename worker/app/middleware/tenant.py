@@ -23,21 +23,18 @@ from __future__ import annotations
 
 import os
 import time
-from typing import Callable
+from collections.abc import Callable
 
 import jwt
 from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
 
-
 PUBLIC_PATHS = {"/health", "/docs", "/openapi.json", "/redoc"}
 
 
 class TenantContextMiddleware(BaseHTTPMiddleware):
-    async def dispatch(
-        self, request: Request, call_next: Callable
-    ) -> Response:
+    async def dispatch(self, request: Request, call_next: Callable) -> Response:
         if request.url.path in PUBLIC_PATHS:
             return await call_next(request)
 
