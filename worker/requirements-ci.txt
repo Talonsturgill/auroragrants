@@ -1,7 +1,12 @@
 # Minimal deps for CI lint + type-check + smoke tests.
-# Heavy ML packages (marker-pdf, torch, cohere, etc.) are deferred to
+# Heavy ML packages (marker-pdf, torch, etc.) are deferred to
 # production deployments on Fly.io and are not needed for the worker
 # skeleton tests introduced in Phase 1.
+#
+# Phase 2 (ingestion + retrieval) adds openai/cohere/supabase/tiktoken to
+# the CI envelope. The tests mock every network call via respx and stubbed
+# clients, but the modules they import still need the SDK types at import
+# time. See /docs/decisions.md for the rationale.
 
 fastapi==0.115.5
 uvicorn[standard]==0.32.1
@@ -15,3 +20,9 @@ pytest==8.3.4
 pytest-asyncio==0.25.0
 pytest-cov==6.0.0
 respx==0.22.0
+
+# Phase 2: ingestion + retrieval
+openai==1.57.4
+cohere==5.13.3
+supabase==2.10.0
+tiktoken==0.8.0
