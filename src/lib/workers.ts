@@ -13,6 +13,8 @@
 import { SignJWT } from "jose";
 
 import type {
+  ExtractRequirementsRequest,
+  ExtractRequirementsResponse,
   IngestRequest,
   IngestResponse,
   ParseMarkerRequest,
@@ -37,7 +39,10 @@ export class WorkerError extends Error {
   }
 }
 
-async function signWorkerToken(tenantId: string): Promise<string> {
+async function signWorkerToken(
+  tenantId: string,
+  extraClaims: Record<string, string> = {},
+): Promise<string> {
   if (!WORKER_JWT_SECRET) {
     throw new WorkerError(
       "WORKER_JWT_SECRET is not set",
@@ -46,7 +51,7 @@ async function signWorkerToken(tenantId: string): Promise<string> {
     );
   }
   const secret = new TextEncoder().encode(WORKER_JWT_SECRET);
-  return new SignJWT({ tenant_id: tenantId })
+  return new SignJWT({ tenant_id: tenantId, ...extraClaims })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuer(WORKER_JWT_ISSUER)
     .setAudience(WORKER_JWT_AUDIENCE)
@@ -60,6 +65,7 @@ interface WorkerPostOptions {
   path: string;
   body: unknown;
   timeoutMs?: number;
+  extraClaims?: Record<string, string>;
 }
 
 async function workerPost<T>({
@@ -67,8 +73,9 @@ async function workerPost<T>({
   path,
   body,
   timeoutMs = 60_000,
+  extraClaims,
 }: WorkerPostOptions): Promise<T> {
-  const token = await signWorkerToken(tenantId);
+  const token = await signWorkerToken(tenantId, extraClaims);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -137,5 +144,35 @@ export async function ingestDocument(
     path: "/ingest",
     body,
     timeoutMs: 120_000,
+  });
+}
+
+/**
+ * Call the Python worker's extractor against a parsed-and-indexed document.
+ * The worker runs the Claude-Sonnet Extractor prompt (see
+ * /docs/07-prompts.md#extractor) and returns a schema-validated JSON blob
+ * matching /starter/evals/schemas/reporting_requirements.json.
+ *
+ * The worker retries once on schema-validation failure before returning
+ * schema_valid=false. HTTP errors surface as WorkerError.
+ */
+export async function extractRequirements(
+  awardId: string,
+  documentId: string,
+  tenantId: string,
+): Promise<ExtractRequirementsResponse> {
+  const body: ExtractRequirementsRequest = {
+    award_id: awardId,
+    document_id: documentId,
+    tenant_id: tenantId,
+  };
+  return workerPost<ExtractRequirementsResponse>({
+    tenantId,
+    path: "/extract/requirements",
+    body,
+    // Extractor runs LLM + schema-validate + retry. 90s is enough for a
+    // 60-page award letter.
+    timeoutMs: 90_000,
+    extraClaims: { award_id: awardId },
   });
 }
