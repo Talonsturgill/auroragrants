@@ -117,12 +117,15 @@ create table embeddings (
   funder_id uuid references funders(id),
   document_chunk_id uuid not null references document_chunks(id) on delete cascade,
   model text not null default 'text-embedding-3-large',
-  embedding vector(3072) not null,
+  -- halfvec (pgvector >= 0.7) lets HNSW index 3072-dim OpenAI embeddings;
+  -- plain `vector` HNSW caps at 2000 dims. halfvec uses ~2x less storage
+  -- with negligible recall loss.
+  embedding halfvec(3072) not null,
   created_at timestamptz not null default now(),
   check ((tenant_id is not null) or (funder_id is not null))
 );
 
-create index embeddings_hnsw on embeddings using hnsw (embedding vector_cosine_ops);
+create index embeddings_hnsw on embeddings using hnsw (embedding halfvec_cosine_ops);
 create index embeddings_tenant_idx on embeddings (tenant_id);
 
 create table opportunities (
