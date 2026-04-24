@@ -39,6 +39,12 @@ const REPORT_VARIANTS: Record<ReportStatus, Variant> = {
     className:
       "border-transparent bg-amber-200 text-amber-900 dark:bg-amber-900 dark:text-amber-100",
   },
+  ready_for_export: {
+    label: "Ready to export",
+    icon: FileCheck,
+    className:
+      "border-transparent bg-indigo-200 text-indigo-900 dark:bg-indigo-900 dark:text-indigo-100",
+  },
   submitted: {
     label: "Submitted",
     icon: Send,

@@ -27,6 +27,7 @@ import {
   FieldStatusBadge,
   ReportStatusBadge,
 } from "../_components/status-badge";
+import { ExportMenu } from "./_components/export-menu";
 
 export const dynamic = "force-dynamic";
 
@@ -154,6 +155,10 @@ export default async function ReportDetailPage({ params }: DetailProps) {
         <div className="flex flex-col items-end gap-2">
           <ReportStatusBadge status={report.status} />
           <DueIndicator dueAt={report.due_at} className="items-end text-right" />
+          <ExportMenu
+            reportId={report.id}
+            isReady={report.status === "ready_for_export"}
+          />
         </div>
       </div>
 

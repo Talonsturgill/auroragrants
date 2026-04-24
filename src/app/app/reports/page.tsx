@@ -37,6 +37,7 @@ const STATUS_LABELS: Record<ReportStatus, string> = {
   upcoming: "Upcoming",
   drafting: "Drafting",
   ready_for_review: "Ready for review",
+  ready_for_export: "Ready to export",
   submitted: "Submitted",
   accepted: "Accepted",
   revision_requested: "Revision requested",
