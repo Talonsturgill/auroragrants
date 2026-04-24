@@ -77,3 +77,10 @@ Severity values: `critical` (security or data loss), `high` (user-facing bug), `
 **Suggested fix:** Add `deleted_at TIMESTAMPTZ` to the documents migration and filter it out of every select.
 **Cost estimate:** 15 minutes.
 **Blocks?:** Soft delete silently fails without the column.
+
+## 2026-04-24 — [medium] — Phase 3
+
+**Noticed:** `pnpm lint` fails in the Claude Code worktree because the worktree has its own `.eslintrc.json` and the ancestor directory `/home/user/auroragrants/.eslintrc.json` also extends `next/core-web-vitals`. ESLint refuses to resolve the `@next/next` plugin uniquely. This reproduces on main before any Phase 3 edits, so it is a preexisting environment issue, not a regression.
+**Suggested fix:** Either migrate to flat config (`eslint.config.js`) or remove the duplicate ancestor `.eslintrc.json` from the worktree harness.
+**Cost estimate:** 1 hour.
+**Blocks?:** `pnpm lint` runs in worktrees. Does not block `pnpm typecheck` or `pnpm test`.
