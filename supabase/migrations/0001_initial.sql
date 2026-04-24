@@ -2,6 +2,7 @@
 -- Every business table has tenant_id + RLS.
 -- See /docs/02-data-model.md for the full spec.
 --
+-- Idempotent: safe to re-run against a database that already has this schema.
 -- Run: supabase db push
 
 create extension if not exists "uuid-ossp";
@@ -10,7 +11,7 @@ create extension if not exists "vector";
 
 -- ----- core ----------------------------------------------------------------
 
-create table tenants (
+create table if not exists tenants (
   id uuid primary key default gen_random_uuid(),
   clerk_org_id text unique not null,
   name text not null,
@@ -29,7 +30,7 @@ create table tenants (
   updated_at timestamptz not null default now()
 );
 
-create table users (
+create table if not exists users (
   id uuid primary key default gen_random_uuid(),
   clerk_user_id text unique not null,
   email text not null,
@@ -37,7 +38,7 @@ create table users (
   created_at timestamptz not null default now()
 );
 
-create table tenant_users (
+create table if not exists tenant_users (
   tenant_id uuid not null references tenants(id) on delete cascade,
   user_id uuid not null references users(id) on delete cascade,
   role text not null check (role in ('owner','admin','editor','viewer')) default 'editor',
@@ -47,7 +48,7 @@ create table tenant_users (
 
 -- ----- funders (shared reference data) --------------------------------------
 
-create table funders (
+create table if not exists funders (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   slug text unique not null,
@@ -72,7 +73,7 @@ create table funders (
 
 -- ----- tenant-scoped -------------------------------------------------------
 
-create table documents (
+create table if not exists documents (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null references tenants(id) on delete cascade,
   funder_id uuid references funders(id),
@@ -91,7 +92,7 @@ create table documents (
   updated_at timestamptz not null default now()
 );
 
-create table document_chunks (
+create table if not exists document_chunks (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid references tenants(id) on delete cascade,
   funder_id uuid references funders(id),
@@ -108,10 +109,10 @@ create table document_chunks (
   check ((tenant_id is not null) or (funder_id is not null))
 );
 
-create index document_chunks_tsv_idx on document_chunks using gin (to_tsvector('english', content));
-create index document_chunks_tenant_idx on document_chunks (tenant_id);
+create index if not exists document_chunks_tsv_idx on document_chunks using gin (to_tsvector('english', content));
+create index if not exists document_chunks_tenant_idx on document_chunks (tenant_id);
 
-create table embeddings (
+create table if not exists embeddings (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid references tenants(id) on delete cascade,
   funder_id uuid references funders(id),
@@ -125,10 +126,10 @@ create table embeddings (
   check ((tenant_id is not null) or (funder_id is not null))
 );
 
-create index embeddings_hnsw on embeddings using hnsw (embedding halfvec_cosine_ops);
-create index embeddings_tenant_idx on embeddings (tenant_id);
+create index if not exists embeddings_hnsw on embeddings using hnsw (embedding halfvec_cosine_ops);
+create index if not exists embeddings_tenant_idx on embeddings (tenant_id);
 
-create table opportunities (
+create table if not exists opportunities (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null references tenants(id) on delete cascade,
   funder_id uuid not null references funders(id),
@@ -146,9 +147,9 @@ create table opportunities (
   updated_at timestamptz not null default now()
 );
 
-create index opportunities_tenant_deadline on opportunities (tenant_id, deadline);
+create index if not exists opportunities_tenant_deadline on opportunities (tenant_id, deadline);
 
-create table awards (
+create table if not exists awards (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null references tenants(id) on delete cascade,
   opportunity_id uuid references opportunities(id),
@@ -167,7 +168,7 @@ create table awards (
   updated_at timestamptz not null default now()
 );
 
-create table reports (
+create table if not exists reports (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null references tenants(id) on delete cascade,
   award_id uuid not null references awards(id) on delete cascade,
@@ -185,10 +186,10 @@ create table reports (
   updated_at timestamptz not null default now()
 );
 
-create index reports_tenant_due on reports (tenant_id, due_at);
-create index reports_tenant_status on reports (tenant_id, status);
+create index if not exists reports_tenant_due on reports (tenant_id, due_at);
+create index if not exists reports_tenant_status on reports (tenant_id, status);
 
-create table report_fields (
+create table if not exists report_fields (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null references tenants(id) on delete cascade,
   report_id uuid not null references reports(id) on delete cascade,
@@ -213,7 +214,7 @@ create table report_fields (
   unique (report_id, key)
 );
 
-create table drafts (
+create table if not exists drafts (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null references tenants(id) on delete cascade,
   report_field_id uuid not null references report_fields(id) on delete cascade,
@@ -235,7 +236,7 @@ create table drafts (
   unique (report_field_id, version)
 );
 
-create table deadlines (
+create table if not exists deadlines (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null references tenants(id) on delete cascade,
   source_type text not null check (source_type in ('opportunity','report')),
@@ -253,9 +254,9 @@ create table deadlines (
   updated_at timestamptz not null default now()
 );
 
-create index deadlines_due_ack on deadlines (due_at, acknowledged);
+create index if not exists deadlines_due_ack on deadlines (due_at, acknowledged);
 
-create table audit_log (
+create table if not exists audit_log (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null references tenants(id) on delete cascade,
   user_id uuid references users(id),
@@ -268,9 +269,9 @@ create table audit_log (
   created_at timestamptz not null default now()
 );
 
-create index audit_tenant_time on audit_log (tenant_id, created_at desc);
+create index if not exists audit_tenant_time on audit_log (tenant_id, created_at desc);
 
-create table token_usage (
+create table if not exists token_usage (
   tenant_id uuid not null references tenants(id) on delete cascade,
   date date not null,
   model text not null,
@@ -280,7 +281,7 @@ create table token_usage (
   primary key (tenant_id, date, model)
 );
 
-create table prompt_versions (
+create table if not exists prompt_versions (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid references tenants(id) on delete cascade, -- null = global
   name text not null,
@@ -292,7 +293,7 @@ create table prompt_versions (
 );
 
 -- Deletion receipts survive tenant deletion for our own audit.
-create table deletion_receipts (
+create table if not exists deletion_receipts (
   id uuid primary key default gen_random_uuid(),
   tenant_slug text not null,
   tenant_name text not null,
@@ -336,6 +337,7 @@ alter table token_usage enable row level security;
 alter table prompt_versions enable row level security;
 
 -- Tenant-scoped tables get standard isolation.
+-- Drop-and-recreate is idempotent; policies are cheap.
 do $$
 declare t text;
 begin
@@ -343,21 +345,29 @@ begin
     'documents','opportunities','awards','reports','report_fields',
     'drafts','deadlines','audit_log','token_usage'
   ]) loop
+    execute format('drop policy if exists %I on %I', t||'_sel_select', t);
+    execute format('drop policy if exists %I on %I', t||'_ins_insert', t);
+    execute format('drop policy if exists %I on %I', t||'_upd_update', t);
+    execute format('drop policy if exists %I on %I', t||'_del_delete', t);
     execute format($p$
-      create policy %I_select on %I for select
+      create policy %I on %I for select
         using (tenant_id = current_tenant_id());
-      create policy %I_insert on %I for insert
+      create policy %I on %I for insert
         with check (tenant_id = current_tenant_id());
-      create policy %I_update on %I for update
+      create policy %I on %I for update
         using (tenant_id = current_tenant_id())
         with check (tenant_id = current_tenant_id());
-      create policy %I_delete on %I for delete
+      create policy %I on %I for delete
         using (tenant_id = current_tenant_id());
-    $p$, t||'_sel', t, t||'_ins', t, t||'_upd', t, t||'_del', t);
+    $p$, t||'_sel_select', t, t||'_ins_insert', t, t||'_upd_update', t, t||'_del_delete', t);
   end loop;
 end$$;
 
 -- document_chunks and embeddings: readable when either tenant matches OR funder-scoped.
+drop policy if exists chunks_select on document_chunks;
+drop policy if exists chunks_insert on document_chunks;
+drop policy if exists chunks_update on document_chunks;
+drop policy if exists chunks_delete on document_chunks;
 create policy chunks_select on document_chunks for select
   using (tenant_id = current_tenant_id() or tenant_id is null);
 create policy chunks_insert on document_chunks for insert
@@ -370,6 +380,10 @@ create policy chunks_update on document_chunks for update
 create policy chunks_delete on document_chunks for delete
   using (tenant_id = current_tenant_id());
 
+drop policy if exists embeddings_select on embeddings;
+drop policy if exists embeddings_insert on embeddings;
+drop policy if exists embeddings_update on embeddings;
+drop policy if exists embeddings_delete on embeddings;
 create policy embeddings_select on embeddings for select
   using (tenant_id = current_tenant_id() or tenant_id is null);
 create policy embeddings_insert on embeddings for insert
@@ -383,6 +397,8 @@ create policy embeddings_delete on embeddings for delete
   using (tenant_id = current_tenant_id());
 
 -- prompt_versions: null tenant (global) readable by all; tenant override readable by owner.
+drop policy if exists prompts_select on prompt_versions;
+drop policy if exists prompts_mod on prompt_versions;
 create policy prompts_select on prompt_versions for select
   using (tenant_id is null or tenant_id = current_tenant_id());
 create policy prompts_mod on prompt_versions for all
@@ -397,6 +413,8 @@ create policy prompts_mod on prompt_versions for all
 
 -- funders: public read for authenticated users; writes founder-only.
 alter table funders enable row level security;
+drop policy if exists funders_select on funders;
+drop policy if exists funders_write on funders;
 create policy funders_select on funders for select using (true);
 create policy funders_write on funders for all
   using (current_setting('app.is_founder', true) = 'true')
@@ -418,9 +436,9 @@ begin
     'tenants','documents','opportunities','awards','reports','report_fields','funders','deadlines'
   ]) loop
     execute format(
-      'create trigger %I_uat before update on %I
+      'create or replace trigger %I before update on %I
        for each row execute procedure set_updated_at();',
-      t, t
+      t||'_uat', t
     );
   end loop;
 end$$;
