@@ -9,20 +9,30 @@ The JWT is signed by the Next.js API gateway with a shared secret
 (`WORKER_JWT_SECRET`). The payload is:
   {
     "tenant_id": "<uuid>",
-    "user_id": "<clerk user id>",
-    "role": "owner|admin|editor|viewer",
+    "user_id":   "<clerk user id>",
+    "role":      "owner|admin|editor|viewer",
     "iat": ...,
     "exp": ...
   }
 
-Reject requests without a valid JWT with 401.
-Reject requests where tenant_id is missing with 400.
+Rules:
+  - Reject requests without a Bearer token with 401 `missing_bearer`.
+  - Reject tokens that fail signature verification with 401 `invalid_signature`.
+  - Reject expired tokens (with 30 s clock skew) with 401 `expired_token`.
+  - Reject tokens missing `tenant_id` with 401 `missing_tenant`.
+  - Attach `tenant_id`, `user_id`, `role` to `request.state`.
+  - NEVER log the raw token or the decoded payload beyond tenant id.
+
+The secret MUST be set to a non-empty value in production. In non-production
+environments (`APP_ENV != "production"`) an empty secret is tolerated to
+simplify smoke tests, but the middleware will still require a properly signed
+token (signed with whatever value WORKER_JWT_SECRET currently holds, which may
+be an empty string).
 """
 
 from __future__ import annotations
 
 import os
-import time
 from collections.abc import Awaitable, Callable
 
 import jwt
@@ -30,37 +40,85 @@ from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
 
-PUBLIC_PATHS = {"/health", "/docs", "/openapi.json", "/redoc"}
+PUBLIC_PATHS: frozenset[str] = frozenset({"/health", "/docs", "/openapi.json", "/redoc"})
+
+# Allowed clock skew when validating the `exp` and `iat` claims.
+CLOCK_SKEW_SECONDS = 30
+
+
+def _load_secret() -> str:
+    """Load the shared HS256 secret from env.
+
+    In production the secret MUST be a non-empty string. In other envs we
+    allow an empty value so tests can run without configuration, but any
+    token presented still has to match whatever value is in place.
+    """
+    env = os.getenv("APP_ENV", "development")
+    secret = os.getenv("WORKER_JWT_SECRET", "")
+    if env == "production" and not secret:
+        raise RuntimeError("WORKER_JWT_SECRET must be set to a non-empty value in production")
+    return secret
 
 
 class TenantContextMiddleware(BaseHTTPMiddleware):
+    """Verify the JWT and stash tenant metadata on `request.state`."""
+
     async def dispatch(
-        self, request: Request, call_next: Callable[[Request], Awaitable[Response]]
+        self,
+        request: Request,
+        call_next: Callable[[Request], Awaitable[Response]],
     ) -> Response:
         if request.url.path in PUBLIC_PATHS:
             return await call_next(request)
 
         auth = request.headers.get("authorization", "")
-        if not auth.startswith("Bearer "):
-            return JSONResponse(status_code=401, content={"error": "missing_bearer"})
+        if not auth.lower().startswith("bearer "):
+            return _reject("missing_bearer")
 
-        token = auth.removeprefix("Bearer ").strip()
-        secret = os.environ["WORKER_JWT_SECRET"]
+        token = auth[len("bearer ") :].strip()
+        if not token:
+            return _reject("missing_bearer")
+
         try:
-            payload = jwt.decode(token, secret, algorithms=["HS256"])
+            secret = _load_secret()
+        except RuntimeError:
+            return _reject("server_misconfigured")
+
+        try:
+            payload = jwt.decode(
+                token,
+                secret,
+                algorithms=["HS256"],
+                leeway=CLOCK_SKEW_SECONDS,
+                options={"require": ["exp"]},
+            )
+        except jwt.ExpiredSignatureError:
+            return _reject("expired_token")
+        except jwt.InvalidSignatureError:
+            return _reject("invalid_signature")
+        except jwt.MissingRequiredClaimError:
+            return _reject("missing_exp")
         except jwt.PyJWTError:
-            return JSONResponse(status_code=401, content={"error": "invalid_jwt"})
+            return _reject("invalid_token")
 
         tenant_id = payload.get("tenant_id")
-        if not tenant_id:
-            return JSONResponse(status_code=400, content={"error": "missing_tenant"})
+        if not tenant_id or not isinstance(tenant_id, str):
+            return _reject("missing_tenant")
 
-        if payload.get("exp", 0) < int(time.time()):
-            return JSONResponse(status_code=401, content={"error": "expired_jwt"})
-
-        # Attach to request.state for handlers; DO NOT log raw content.
+        # Attach to request.state for handlers. NEVER log the raw token.
         request.state.tenant_id = tenant_id
-        request.state.user_id = payload.get("user_id")
-        request.state.role = payload.get("role", "viewer")
+        user_id = payload.get("user_id")
+        if isinstance(user_id, str):
+            request.state.user_id = user_id
+        role = payload.get("role")
+        request.state.role = role if isinstance(role, str) else "viewer"
 
         return await call_next(request)
+
+
+def _reject(reason: str) -> JSONResponse:
+    """Return a uniform 401 error response without leaking token content."""
+    return JSONResponse(
+        status_code=401,
+        content={"error": "invalid_token", "reason": reason},
+    )
