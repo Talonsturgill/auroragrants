@@ -84,3 +84,14 @@ Severity values: `critical` (security or data loss), `high` (user-facing bug), `
 **Suggested fix:** Either migrate to flat config (`eslint.config.js`) or remove the duplicate ancestor `.eslintrc.json` from the worktree harness.
 **Cost estimate:** 1 hour.
 **Blocks?:** `pnpm lint` runs in worktrees. Does not block `pnpm typecheck` or `pnpm test`.
+
+## 2026-04-24 — [medium] — Phase 4
+
+**Noticed:** Pre-existing lint errors in the Phase 4 CDE merge (commit `20deb15`) make `pnpm build` fail on `next lint`:
+  - `src/app/app/reports/[id]/fields/[fieldId]/_components/citation-pill.tsx:40` — unused `_ref` parameter.
+  - `src/app/app/reports/[id]/fields/[fieldId]/_components/critic-panel.tsx:164` — `React.useMemo` is called conditionally (violates rules-of-hooks).
+
+These are in Agent C/D's drafting UI, not the export system. Phase 4 Agent E was instructed to only touch the export scope, so these are logged rather than fixed inline. Phase 3's worktree `pnpm lint` followup applies equally here.
+**Suggested fix:** Drop the unused `_ref` param (or prefix with a different pattern that ESLint accepts) and hoist the `useMemo` above the early-return in `critic-panel.tsx`.
+**Cost estimate:** 15 minutes total.
+**Blocks?:** `pnpm build` and `pnpm lint`. Does not block `pnpm typecheck` or `pnpm test` (tests pass).

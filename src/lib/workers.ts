@@ -176,3 +176,80 @@ export async function extractRequirements(
     extraClaims: { award_id: awardId },
   });
 }
+
+/**
+ * Supported export formats for the Phase 4 export system. Kept in sync
+ * with the worker's ExportReportRequest accept list.
+ */
+export type ExportFormat = "pdf" | "docx" | "text";
+
+/**
+ * Call the Python worker's export route for a `ready_for_export` report.
+ *
+ * Returns the raw `Blob` and a derived filename. The web API route proxies
+ * this blob back to the browser with the appropriate Content-Disposition
+ * header. The worker performs the heavy lift: rendering the PDF via
+ * WeasyPrint, DOCX via python-docx, or plain text.
+ *
+ * Unlike the JSON endpoints, this helper reads the response as a binary
+ * blob and pulls the filename from Content-Disposition.
+ */
+export async function exportReport(
+  reportId: string,
+  format: ExportFormat,
+  tenantId: string,
+): Promise<{ blob: Blob; filename: string }> {
+  const token = await signWorkerToken(tenantId, { report_id: reportId });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 60_000);
+  try {
+    const res = await fetch(`${WORKER_URL}/export/report`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+        "x-tenant-id": tenantId,
+      },
+      body: JSON.stringify({ report_id: reportId, format }),
+      signal: controller.signal,
+    });
+
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      throw new WorkerError(
+        `worker /export/report returned ${res.status}: ${detail.slice(0, 200)}`,
+        res.status,
+      );
+    }
+
+    const blob = await res.blob();
+    const disposition = res.headers.get("content-disposition") ?? "";
+    const filename =
+      parseFilenameFromDisposition(disposition) ??
+      defaultFilename(reportId, format);
+
+    return { blob, filename };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/**
+ * Pull the `filename` field out of a Content-Disposition header.
+ * Tolerates both `filename="..."` and unquoted `filename=...` forms.
+ */
+export function parseFilenameFromDisposition(
+  disposition: string,
+): string | null {
+  if (!disposition) return null;
+  const quoted = disposition.match(/filename="([^"]+)"/i);
+  if (quoted) return quoted[1];
+  const bare = disposition.match(/filename=([^;]+)/i);
+  if (bare) return bare[1].trim();
+  return null;
+}
+
+function defaultFilename(reportId: string, format: ExportFormat): string {
+  const ext = format === "text" ? "txt" : format;
+  return `report-${reportId}.${ext}`;
+}

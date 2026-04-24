@@ -9,6 +9,7 @@ export type ReportStatus =
   | "upcoming"
   | "drafting"
   | "ready_for_review"
+  | "ready_for_export"
   | "submitted"
   | "accepted"
   | "revision_requested";
@@ -17,6 +18,7 @@ export const REPORT_STATUSES: ReportStatus[] = [
   "upcoming",
   "drafting",
   "ready_for_review",
+  "ready_for_export",
   "submitted",
   "accepted",
   "revision_requested",
