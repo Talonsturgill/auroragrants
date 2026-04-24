@@ -464,3 +464,185 @@ def test_route_returns_200_even_when_schema_invalid() -> None:
     assert body["attempts"] == 2
     assert isinstance(body["schema_errors"], list)
     assert len(body["schema_errors"]) > 0
+
+
+# ---------------------------------------------------------------------------
+# _extract_json — fence stripping and non-dict responses
+# ---------------------------------------------------------------------------
+
+
+def test_extract_json_strips_json_fenced_block() -> None:
+    from app.extract.extractor import _extract_json
+
+    result = _extract_json('```json\n{"key": "value"}\n```')
+    assert result == {"key": "value"}
+
+
+def test_extract_json_strips_bare_fenced_block() -> None:
+    from app.extract.extractor import _extract_json
+
+    result = _extract_json('```\n{"key": "value"}\n```')
+    assert result == {"key": "value"}
+
+
+def test_extract_json_array_returns_empty_dict() -> None:
+    from app.extract.extractor import _extract_json
+
+    assert _extract_json("[1, 2, 3]") == {}
+
+
+def test_extract_json_malformed_returns_empty_dict() -> None:
+    from app.extract.extractor import _extract_json
+
+    assert _extract_json("not json at all {{") == {}
+
+
+# ---------------------------------------------------------------------------
+# _response_text — dict-style blocks and missing text block
+# ---------------------------------------------------------------------------
+
+
+def test_response_text_dict_block() -> None:
+    from typing import ClassVar
+
+    from app.extract.extractor import _response_text
+
+    class _Response:
+        content: ClassVar[list[Any]] = [{"type": "text", "text": "hello from dict block"}]
+        usage = None
+
+    assert _response_text(_Response()) == "hello from dict block"
+
+
+def test_response_text_no_text_block_returns_empty() -> None:
+    from typing import ClassVar
+
+    from app.extract.extractor import _response_text
+
+    class _Response:
+        content: ClassVar[list[Any]] = [{"type": "tool_use", "id": "tu_1"}]
+        usage = None
+
+    assert _response_text(_Response()) == ""
+
+
+def test_response_text_empty_content_returns_empty() -> None:
+    from typing import ClassVar
+
+    from app.extract.extractor import _response_text
+
+    class _Response:
+        content: ClassVar[list[Any]] = []
+        usage = None
+
+    assert _response_text(_Response()) == ""
+
+
+# ---------------------------------------------------------------------------
+# _usage_tokens — None usage and dict-style usage
+# ---------------------------------------------------------------------------
+
+
+def test_usage_tokens_none_returns_zeros() -> None:
+    from app.extract.extractor import _usage_tokens
+
+    class _Response:
+        usage = None
+
+    assert _usage_tokens(_Response()) == (0, 0)
+
+
+def test_usage_tokens_dict_style() -> None:
+    from typing import ClassVar
+
+    from app.extract.extractor import _usage_tokens
+
+    class _Response:
+        usage: ClassVar[dict[str, int]] = {"input_tokens": 42, "output_tokens": 17}
+
+    assert _usage_tokens(_Response()) == (42, 17)
+
+
+# ---------------------------------------------------------------------------
+# Exception propagation from _call
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_extractor_propagates_anthropic_exception() -> None:
+    """When the Anthropic client raises, extract_reporting_requirements re-raises."""
+
+    class _ExplodingMessages:
+        async def create(self, **kwargs: Any) -> Any:
+            raise RuntimeError("simulated network timeout")
+
+    class _ExplodingAnthropic:
+        messages = _ExplodingMessages()
+
+    with pytest.raises(RuntimeError, match="simulated network timeout"):
+        await extract_reporting_requirements("some text", _ExplodingAnthropic())  # type: ignore[arg-type]
+
+
+@pytest.mark.asyncio
+async def test_extractor_exception_logged_without_leaking_content(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    secret = "SENSITIVE_DOC_CONTENT_QWERTY_12345"
+
+    class _ExplodingMessages:
+        async def create(self, **kwargs: Any) -> Any:
+            raise ValueError("API key invalid")
+
+    class _ExplodingAnthropic:
+        messages = _ExplodingMessages()
+
+    import logging
+
+    with (
+        caplog.at_level(logging.WARNING, logger="app.extract.extractor"),
+        pytest.raises(ValueError),
+    ):
+        await extract_reporting_requirements(secret, _ExplodingAnthropic())  # type: ignore[arg-type]
+
+    logs = " ".join(r.getMessage() for r in caplog.records)
+    for r in caplog.records:
+        for v in r.__dict__.values():
+            if isinstance(v, str):
+                logs += " " + v
+    assert secret not in logs
+
+
+# ---------------------------------------------------------------------------
+# Route — 503 when clients are not configured
+# ---------------------------------------------------------------------------
+
+
+def test_route_503_when_supabase_not_configured() -> None:
+    """_reset_app_state already removed both clients; just send the request."""
+    client = TestClient(app, raise_server_exceptions=False)
+    token = _issue_jwt(tenant_id="t-A")
+    resp = client.post(
+        "/extract/requirements",
+        headers={"Authorization": f"Bearer {token}"},
+        json={"document_id": "doc-1"},
+    )
+    assert resp.status_code == 503
+    assert resp.json()["detail"] == "supabase_not_configured"
+
+
+def test_route_503_when_anthropic_not_configured() -> None:
+    """Supabase has valid doc+chunks but Anthropic is absent → 503."""
+    app.state.supabase = _FakeSupabase(
+        documents={"doc-1": {"id": "doc-1", "tenant_id": "t-A"}},
+        chunks={"doc-1": [{"chunk_index": 0, "content": "award letter content"}]},
+    )
+    # Deliberately do NOT set app.state.anthropic.
+    client = TestClient(app, raise_server_exceptions=False)
+    token = _issue_jwt(tenant_id="t-A")
+    resp = client.post(
+        "/extract/requirements",
+        headers={"Authorization": f"Bearer {token}"},
+        json={"document_id": "doc-1"},
+    )
+    assert resp.status_code == 503
+    assert resp.json()["detail"] == "extractor_not_configured"

@@ -334,6 +334,193 @@ describe("runExtractionForAward", () => {
     ).toBe("failed");
   });
 
+  it("returns failed when award is not found", async () => {
+    const { client } = makeSupabase({ awardRow: null });
+
+    const result = await runExtractionForAward(
+      AWARD_ID,
+      TENANT,
+      // @ts-expect-error test double
+      client,
+    );
+
+    expect(result.status).toBe("failed");
+    expect(result.error).toBe("award_not_found");
+    expect(mockedExtractRequirements).not.toHaveBeenCalled();
+  });
+
+  it("returns failed and writes failed status when source_document_id is null", async () => {
+    const { client, calls } = makeSupabase({
+      awardRow: { ...BASE_AWARD_ROW, source_document_id: null },
+    });
+
+    const result = await runExtractionForAward(
+      AWARD_ID,
+      TENANT,
+      // @ts-expect-error test double
+      client,
+    );
+
+    expect(result.status).toBe("failed");
+    expect(result.error).toBe("missing_source_document");
+    const failedUpdate = calls.find(
+      (c) => c.table === "awards" && c.op === "update",
+    );
+    expect(
+      (failedUpdate?.payload as Record<string, unknown>).extraction_status,
+    ).toBe("failed");
+    expect(mockedExtractRequirements).not.toHaveBeenCalled();
+  });
+
+  it("returns failed when period_end is null", async () => {
+    const { client } = makeSupabase({
+      awardRow: { ...BASE_AWARD_ROW, period_end: null },
+    });
+
+    const result = await runExtractionForAward(
+      AWARD_ID,
+      TENANT,
+      // @ts-expect-error test double
+      client,
+    );
+
+    expect(result.status).toBe("failed");
+    expect(result.error).toBe("missing_period_end");
+    expect(mockedExtractRequirements).not.toHaveBeenCalled();
+  });
+
+  it("returns failed when the running-status DB update errors", async () => {
+    const { client } = makeSupabase({
+      awardRow: BASE_AWARD_ROW,
+      awardUpdateError: { message: "connection timeout" },
+    });
+
+    const result = await runExtractionForAward(
+      AWARD_ID,
+      TENANT,
+      // @ts-expect-error test double
+      client,
+    );
+
+    expect(result.status).toBe("failed");
+    expect(result.error).toBe("status_update_failed");
+    expect(mockedExtractRequirements).not.toHaveBeenCalled();
+  });
+
+  it("returns failed when reports insert errors during persist", async () => {
+    const { client } = makeSupabase({
+      awardRow: BASE_AWARD_ROW,
+      reportsInsertResult: {
+        data: null,
+        error: { message: "unique constraint violation" },
+      },
+    });
+    mockedExtractRequirements.mockResolvedValueOnce({
+      // @ts-expect-error partial fixture
+      requirements: HAPPY_REQUIREMENTS,
+      attempts: 1,
+      schema_valid: true,
+      schema_errors: null,
+      tokens_in: 10,
+      tokens_out: 20,
+    });
+
+    const result = await runExtractionForAward(
+      AWARD_ID,
+      TENANT,
+      // @ts-expect-error test double
+      client,
+    );
+
+    expect(result.status).toBe("failed");
+    expect(result.error).toContain("reports insert failed");
+  });
+
+  it("returns failed when period_start is missing at persist time", async () => {
+    const { client } = makeSupabase({
+      awardRow: { ...BASE_AWARD_ROW, period_start: null },
+    });
+    mockedExtractRequirements.mockResolvedValueOnce({
+      // @ts-expect-error partial fixture
+      requirements: HAPPY_REQUIREMENTS,
+      attempts: 1,
+      schema_valid: true,
+      schema_errors: null,
+      tokens_in: 5,
+      tokens_out: 10,
+    });
+
+    const result = await runExtractionForAward(
+      AWARD_ID,
+      TENANT,
+      // @ts-expect-error test double
+      client,
+    );
+
+    expect(result.status).toBe("failed");
+    expect(result.error).toContain("missing period_start");
+  });
+
+  it("completes ok with zero reports and inserts no rows", async () => {
+    const { client, calls } = makeSupabase({ awardRow: BASE_AWARD_ROW });
+    mockedExtractRequirements.mockResolvedValueOnce({
+      requirements: {
+        ...HAPPY_REQUIREMENTS,
+        reports: [],
+      } as unknown as import("@/lib/types/worker").ExtractedRequirements,
+      attempts: 1,
+      schema_valid: true,
+      schema_errors: null,
+      tokens_in: 5,
+      tokens_out: 10,
+    });
+
+    const result = await runExtractionForAward(
+      AWARD_ID,
+      TENANT,
+      // @ts-expect-error test double
+      client,
+    );
+
+    expect(result.status).toBe("ok");
+    expect(
+      calls.filter((c) => c.table === "reports" && c.op === "insert"),
+    ).toHaveLength(0);
+    expect(
+      calls.filter((c) => c.table === "report_fields" && c.op === "insert"),
+    ).toHaveLength(0);
+  });
+
+  it("skips report_fields insert when narrative_sections is empty", async () => {
+    const { client, calls } = makeSupabase({ awardRow: BASE_AWARD_ROW });
+    mockedExtractRequirements.mockResolvedValueOnce({
+      requirements: {
+        ...HAPPY_REQUIREMENTS,
+        reports: [{ ...HAPPY_REQUIREMENTS.reports[0], narrative_sections: [] }],
+      } as unknown as import("@/lib/types/worker").ExtractedRequirements,
+      attempts: 1,
+      schema_valid: true,
+      schema_errors: null,
+      tokens_in: 5,
+      tokens_out: 10,
+    });
+
+    const result = await runExtractionForAward(
+      AWARD_ID,
+      TENANT,
+      // @ts-expect-error test double
+      client,
+    );
+
+    expect(result.status).toBe("ok");
+    expect(
+      calls.filter((c) => c.table === "reports" && c.op === "insert"),
+    ).toHaveLength(1);
+    expect(
+      calls.filter((c) => c.table === "report_fields" && c.op === "insert"),
+    ).toHaveLength(0);
+  });
+
   it("computes due_at as period_end + due_offset_days (30 day offset)", async () => {
     const { client, calls } = makeSupabase({
       awardRow: { ...BASE_AWARD_ROW, period_end: "2026-06-30" },
