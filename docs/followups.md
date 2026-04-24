@@ -58,3 +58,31 @@ Severity values: `critical` (security or data loss), `high` (user-facing bug), `
 **Suggested fix:** Add `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, a `GOVERNANCE.md` describing the Indigenous Data Advisory Council, and a self-hosting guide.
 **Cost estimate:** 3 hours.
 **Blocks?:** Public announcement, not Phase 1 acceptance.
+
+## 2026-04-24 — [medium] — Phase 2
+
+**Noticed:** The DB `documents.parse_status` CHECK enum is `('queued', 'parsing', 'parsed', 'failed')` but docs/08-ui-spec.md and the Phase 2 Documents task spec both reference an `indexed` terminal state. The web UI currently maps `parsed` to a badge labelled "Indexed" and treats the two as aliases.
+**Suggested fix:** Decide whether "indexed" is a separate state representing "chunks + embeddings inserted" distinct from "parsed" (which would just mean "PDF extracted"). If yes, add a migration adding the `indexed` value and update the worker to emit it after the embedding pass. If no, update 08-ui-spec.md to say "parsed."
+**Cost estimate:** 1 hour.
+**Blocks?:** No. The alias is clearly documented in `src/lib/types/documents.ts`.
+
+## 2026-04-24 — [low] — Phase 2
+
+**Noticed:** Running `pnpm lint` from the worktree (`/home/user/auroragrants/.claude/worktrees/agent-*`) errors with `Plugin "@next/next" was conflicted` because ESLint's rc resolver walks up to the parent checkout's `.eslintrc.json`. Running from `/home/user/auroragrants/` directly (the ordinary repo checkout) lints cleanly.
+**Suggested fix:** Either migrate both repos to flat config (`eslint.config.js`) which does not walk up, or add a `root: true` flag to the worktree's `.eslintrc.json`. Our project config is identical in both locations, so this is a harness-only issue.
+**Cost estimate:** 15 minutes.
+**Blocks?:** No. `pnpm build` still succeeds in both locations. CI runs outside worktrees.
+
+## 2026-04-24 — [low] — Phase 2
+
+**Noticed:** `src/app/api/documents/route.ts` uses a Supabase relational select (`*, chunks:document_chunks(count)`) which requires a foreign-key relationship to be declared in the schema cache. If the migration does not include `ON DELETE CASCADE` plus a named FK, Postgres will still accept it but the PostgREST select may fail or return null counts.
+**Suggested fix:** When the seed agent finalizes `supabase/migrations/`, double-check that `document_chunks.document_id -> documents.id` is picked up by PostgREST. Add an end-to-end test that asserts `/api/documents` returns a numeric `chunk_count`.
+**Cost estimate:** 30 minutes.
+**Blocks?:** No. Falls back to 0 when the relation is missing.
+
+## 2026-04-24 — [low] — Phase 2
+
+**Noticed:** The `documents` table in `docs/02-data-model.md` has no `deleted_at` column, but the Documents API implements a soft delete by setting `deleted_at`. Either the schema docs need an update, or the implementation should use a different soft-delete convention.
+**Suggested fix:** Add `deleted_at TIMESTAMPTZ` to the `documents` migration and filter it out of every select. Keep the column nullable so restorations are cheap. Parallel Supabase seed agent owns the migration.
+**Cost estimate:** 15 minutes.
+**Blocks?:** Soft delete silently fails without the column. Medium for a real deploy, low for CI since no DB is wired.
