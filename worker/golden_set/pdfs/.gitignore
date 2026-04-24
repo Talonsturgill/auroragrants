@@ -1,0 +1,4 @@
+# Real NOFO PDFs live here locally but are not tracked in git.
+# See ../README.md for the list of PDFs and source URLs.
+*.pdf
+!.gitkeep
