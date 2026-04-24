@@ -82,7 +82,7 @@ jobs:
         run: python -c "import tiktoken; tiktoken.get_encoding('cl100k_base')"
       - run: ruff check .
       - run: ruff format --check .
-      - run: mypy app
+      - run: python -m mypy app
       - run: pytest -q
 
   starter-evals-golden:
