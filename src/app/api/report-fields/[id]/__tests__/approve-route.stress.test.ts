@@ -14,7 +14,7 @@ process.env.WORKER_URL = "http://worker.test";
 process.env.WORKER_JWT_SECRET = "test-worker-jwt-secret-at-least-32-bytes";
 
 const TENANT = "11111111-2222-3333-4444-555555555555";
-const OTHER_TENANT = "99999999-9999-9999-9999-999999999999";
+// OTHER_TENANT is used in cross-tenant isolation tests (pending implementation).
 const FIELD_ID = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
 const DRAFT_ID = "bbbbbbbb-cccc-dddd-eeee-ffffffffffff";
 
