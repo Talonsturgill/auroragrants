@@ -1,0 +1,8 @@
+AuroraGrants
+Copyright 2026 Talon Sturgill and Arctic Intelligence contributors.
+
+This product includes software developed by the AuroraGrants community,
+released under the Apache License, Version 2.0. See LICENSE for terms.
+
+Third-party notices: see package.json and worker/requirements.txt for the
+list of runtime dependencies. Each retains its own license.
