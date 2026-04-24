@@ -77,6 +77,9 @@ jobs:
       - run: pip install -U pip
       - run: pip install -r requirements-ci.txt
       - run: pip install ruff mypy
+      - name: Warm tiktoken cache (cl100k_base)
+        continue-on-error: true
+        run: python -c "import tiktoken; tiktoken.get_encoding('cl100k_base')"
       - run: ruff check .
       - run: ruff format --check .
       - run: mypy app

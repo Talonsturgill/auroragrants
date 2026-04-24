@@ -20,6 +20,37 @@ from typing import Any
 import pytest
 
 
+def _tiktoken_available() -> bool:
+    """Probe whether tiktoken can load `cl100k_base`.
+
+    CI sometimes cannot reach `openaipublic.blob.core.windows.net` (sandbox
+    or transient network issues). If the encoding cannot be fetched and is
+    not cached, tests that depend on it will be skipped rather than errored.
+    """
+    try:
+        import tiktoken
+
+        tiktoken.get_encoding("cl100k_base")
+        return True
+    except Exception:
+        return False
+
+
+TIKTOKEN_AVAILABLE = _tiktoken_available()
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+    """Skip chunker tests when tiktoken's BPE file is unreachable."""
+    if TIKTOKEN_AVAILABLE:
+        return
+    skip_marker = pytest.mark.skip(
+        reason="tiktoken cl100k_base not available (no network, no cache)"
+    )
+    for item in items:
+        if "test_chunker" in str(item.fspath):
+            item.add_marker(skip_marker)
+
+
 def _build_pdf(page_texts: list[str]) -> bytes:
     """Assemble a minimal PDF 1.4 with `len(page_texts)` pages.
 
