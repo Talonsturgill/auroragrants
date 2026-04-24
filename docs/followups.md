@@ -59,9 +59,21 @@ Severity values: `critical` (security or data loss), `high` (user-facing bug), `
 **Cost estimate:** 3 hours.
 **Blocks?:** Public announcement, not Phase 1 acceptance.
 
-## 2026-04-24 — [high] — Phase 2
+## 2026-04-24 — [resolved] — Phase 2
 
-**Noticed:** Phase 2 ingestion spec requires `documents.parse_status = 'indexed'` and `documents.indexed_at = now()` after chunk+embed completes, but `supabase/migrations/0001_initial.sql` neither defines `indexed_at` nor includes `'indexed'` in the `parse_status` check constraint (valid values: `queued|parsing|parsed|failed`). The ingest worker currently writes `parse_status='indexed'` and `indexed_at=now()`; against a real DB this will fail the check constraint and error on the missing column.
-**Suggested fix:** Add a `0003_indexed_status.sql` migration that (a) drops and re-adds the `parse_status` check constraint with `'indexed'` appended, and (b) adds `indexed_at timestamptz`. Apply before Phase 2 integration testing against a real Supabase.
+**Noticed:** `documents.parse_status` check constraint did not include `'indexed'`, and `indexed_at` column was missing. Worker's `mark_document_indexed()` would fail against a real DB.
+**Resolution:** `supabase/migrations/0004_indexed_status.sql` adds `'indexed'` to the check constraint and adds `indexed_at timestamptz`. Apply along with 0001–0003 before Phase 2 integration testing.
+
+## 2026-04-24 — [low] — Phase 2
+
+**Noticed:** `src/app/api/documents/route.ts` uses a Supabase relational select (`*, chunks:document_chunks(count)`) which requires PostgREST to resolve the FK. If the FK relationship isn't in the schema cache the count may be null.
+**Suggested fix:** Confirm PostgREST picks up `document_chunks.document_id -> documents.id`. Add an integration test that asserts `/api/documents` returns a numeric `chunk_count`.
+**Cost estimate:** 30 minutes.
+**Blocks?:** No. Falls back to 0 when relation is missing.
+
+## 2026-04-24 — [low] — Phase 2
+
+**Noticed:** The `documents` table has no `deleted_at` column but the Documents API implements soft delete by setting it.
+**Suggested fix:** Add `deleted_at TIMESTAMPTZ` to the documents migration and filter it out of every select.
 **Cost estimate:** 15 minutes.
-**Blocks?:** Phase 2 end-to-end ingestion against a real Supabase instance. Mocked unit tests pass today.
+**Blocks?:** Soft delete silently fails without the column.
