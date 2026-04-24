@@ -1,0 +1,210 @@
+{
+  "award_summary": {
+    "program_name": "Tribal Behavioral Health",
+    "funder_name": "Alaska Department of Health and Social Services",
+    "award_min_usd": 500000,
+    "award_max_usd": 500000,
+    "period_months": 36,
+    "cfda_number": null,
+    "eligibility_summary": "Tribal or rural Alaska community-based organization awarded under the Alaska DHSS Division of Behavioral Health Tribal Behavioral Health program."
+  },
+  "reports": [
+    {
+      "title": "Annual Progress Report Year 1",
+      "report_type": "progress",
+      "due_offset_days": 60,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "program_activities",
+          "label": "Program Activities",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1200,
+          "word_count_min": null,
+          "description": "Description of behavioral health services delivered during the year."
+        },
+        {
+          "key": "client_outcomes",
+          "label": "Client Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1000,
+          "word_count_min": null,
+          "description": "Aggregated outcomes for clients served during the year."
+        },
+        {
+          "key": "workforce_and_capacity",
+          "label": "Workforce and Capacity",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Summary of staff hired, trained, or retained under the award."
+        },
+        {
+          "key": "cultural_responsiveness",
+          "label": "Cultural Responsiveness",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "How services were adapted to the cultural context of communities served."
+        }
+      ]
+    },
+    {
+      "title": "Annual Progress Report Year 2",
+      "report_type": "progress",
+      "due_offset_days": 60,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "program_activities",
+          "label": "Program Activities",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1200,
+          "word_count_min": null,
+          "description": "Description of behavioral health services delivered during the year."
+        },
+        {
+          "key": "client_outcomes",
+          "label": "Client Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1000,
+          "word_count_min": null,
+          "description": "Aggregated outcomes for clients served during the year."
+        },
+        {
+          "key": "workforce_and_capacity",
+          "label": "Workforce and Capacity",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Summary of staff hired, trained, or retained under the award."
+        },
+        {
+          "key": "cultural_responsiveness",
+          "label": "Cultural Responsiveness",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "How services were adapted to the cultural context of communities served."
+        }
+      ]
+    },
+    {
+      "title": "Annual Progress Report Year 3",
+      "report_type": "progress",
+      "due_offset_days": 60,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "program_activities",
+          "label": "Program Activities",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1200,
+          "word_count_min": null,
+          "description": "Description of behavioral health services delivered during the year."
+        },
+        {
+          "key": "client_outcomes",
+          "label": "Client Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1000,
+          "word_count_min": null,
+          "description": "Aggregated outcomes for clients served during the year."
+        },
+        {
+          "key": "workforce_and_capacity",
+          "label": "Workforce and Capacity",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Summary of staff hired, trained, or retained under the award."
+        },
+        {
+          "key": "cultural_responsiveness",
+          "label": "Cultural Responsiveness",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "How services were adapted to the cultural context of communities served."
+        }
+      ]
+    },
+    {
+      "title": "Annual Financial Report Year 1",
+      "report_type": "financial",
+      "due_offset_days": 60,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": []
+    },
+    {
+      "title": "Annual Financial Report Year 2",
+      "report_type": "financial",
+      "due_offset_days": 60,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": []
+    },
+    {
+      "title": "Annual Financial Report Year 3",
+      "report_type": "financial",
+      "due_offset_days": 60,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": []
+    }
+  ],
+  "citations": [
+    {
+      "field": "award_summary.program_name",
+      "page": 1,
+      "quote": "awarded funding under the Tribal Behavioral Health program"
+    },
+    {
+      "field": "award_summary.funder_name",
+      "page": 1,
+      "quote": "Alaska Department of Health and Social Services"
+    },
+    {
+      "field": "award_summary.award_max_usd",
+      "page": 1,
+      "quote": "in the amount of $500,000"
+    },
+    {
+      "field": "award_summary.period_months",
+      "page": 1,
+      "quote": "award period spans 36 months"
+    },
+    {
+      "field": "reports.0.report_type",
+      "page": 1,
+      "quote": "annual progress report covering each 12-month reporting period"
+    },
+    {
+      "field": "reports.0.due_offset_days",
+      "page": 1,
+      "quote": "due no later than 60 days after the end of each reporting period"
+    },
+    {
+      "field": "reports.3.report_type",
+      "page": 1,
+      "quote": "submit an annual financial report covering the same 12-month reporting period"
+    }
+  ],
+  "uncertainties": []
+}

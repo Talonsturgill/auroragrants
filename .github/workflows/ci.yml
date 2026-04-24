@@ -100,5 +100,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install anthropic openai textstat pytest pytest-asyncio
+      - run: pip install anthropic openai textstat pytest pytest-asyncio jsonschema
       - run: pytest starter/evals -q

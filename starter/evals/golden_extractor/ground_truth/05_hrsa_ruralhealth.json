@@ -1,0 +1,253 @@
+{
+  "award_summary": {
+    "program_name": "Rural Health Care Services Outreach Program",
+    "funder_name": "Health Resources and Services Administration",
+    "award_min_usd": 750000,
+    "award_max_usd": 750000,
+    "period_months": 36,
+    "cfda_number": "93.912",
+    "eligibility_summary": "Organization awarded under the HRSA Rural Health Care Services Outreach Program, governed by 45 CFR 75."
+  },
+  "reports": [
+    {
+      "title": "Annual Programmatic Performance Report Year 1",
+      "report_type": "ppr",
+      "due_offset_days": 90,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "project_progress",
+          "label": "Project Progress",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1500,
+          "word_count_min": null,
+          "description": "Project activities, milestones reached, and work completed during the budget period."
+        },
+        {
+          "key": "performance_measures",
+          "label": "Performance Measures",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1000,
+          "word_count_min": null,
+          "description": "Quantitative results for each performance measure with variance explanations."
+        },
+        {
+          "key": "collaboration_and_network_activities",
+          "label": "Collaboration and Network Activities",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 800,
+          "word_count_min": null,
+          "description": "Consortium partner contributions and collaborative activities."
+        }
+      ]
+    },
+    {
+      "title": "Annual Programmatic Performance Report Year 2",
+      "report_type": "ppr",
+      "due_offset_days": 90,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "project_progress",
+          "label": "Project Progress",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1500,
+          "word_count_min": null,
+          "description": "Project activities, milestones reached, and work completed during the budget period."
+        },
+        {
+          "key": "performance_measures",
+          "label": "Performance Measures",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1000,
+          "word_count_min": null,
+          "description": "Quantitative results for each performance measure with variance explanations."
+        },
+        {
+          "key": "collaboration_and_network_activities",
+          "label": "Collaboration and Network Activities",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 800,
+          "word_count_min": null,
+          "description": "Consortium partner contributions and collaborative activities."
+        }
+      ]
+    },
+    {
+      "title": "Annual Programmatic Performance Report Year 3",
+      "report_type": "ppr",
+      "due_offset_days": 90,
+      "period_months": 12,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "project_progress",
+          "label": "Project Progress",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1500,
+          "word_count_min": null,
+          "description": "Project activities, milestones reached, and work completed during the budget period."
+        },
+        {
+          "key": "performance_measures",
+          "label": "Performance Measures",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1000,
+          "word_count_min": null,
+          "description": "Quantitative results for each performance measure with variance explanations."
+        },
+        {
+          "key": "collaboration_and_network_activities",
+          "label": "Collaboration and Network Activities",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 800,
+          "word_count_min": null,
+          "description": "Consortium partner contributions and collaborative activities."
+        }
+      ]
+    },
+    {
+      "title": "SF-425 Federal Financial Report H1",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "portal",
+      "narrative_sections": []
+    },
+    {
+      "title": "SF-425 Federal Financial Report H2",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "portal",
+      "narrative_sections": []
+    },
+    {
+      "title": "SF-425 Federal Financial Report H3",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "portal",
+      "narrative_sections": []
+    },
+    {
+      "title": "SF-425 Federal Financial Report H4",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "portal",
+      "narrative_sections": []
+    },
+    {
+      "title": "SF-425 Federal Financial Report H5",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "portal",
+      "narrative_sections": []
+    },
+    {
+      "title": "SF-425 Federal Financial Report H6",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "portal",
+      "narrative_sections": []
+    },
+    {
+      "title": "Final Comprehensive Report",
+      "report_type": "final",
+      "due_offset_days": 120,
+      "period_months": 36,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "cumulative_project_outcomes",
+          "label": "Cumulative Project Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 2000,
+          "word_count_min": null,
+          "description": "Cumulative outcomes across the full period of performance."
+        },
+        {
+          "key": "sustainability_plan",
+          "label": "Sustainability Plan",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1000,
+          "word_count_min": null,
+          "description": "Plan for sustaining project activities after the award ends."
+        },
+        {
+          "key": "dissemination_of_findings",
+          "label": "Dissemination of Findings",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 750,
+          "word_count_min": null,
+          "description": "Plan and summary for sharing findings with relevant audiences."
+        }
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "field": "award_summary.program_name",
+      "page": 1,
+      "quote": "funding under the Rural Health Care Services Outreach Program"
+    },
+    {
+      "field": "award_summary.funder_name",
+      "page": 1,
+      "quote": "Health Resources and Services Administration"
+    },
+    {
+      "field": "award_summary.cfda_number",
+      "page": 1,
+      "quote": "CFDA 93.912"
+    },
+    {
+      "field": "award_summary.award_max_usd",
+      "page": 1,
+      "quote": "in the amount of $750,000"
+    },
+    {
+      "field": "award_summary.period_months",
+      "page": 1,
+      "quote": "period of performance is 3 years"
+    },
+    {
+      "field": "reports.0.report_type",
+      "page": 1,
+      "quote": "annual Programmatic Performance Report"
+    },
+    {
+      "field": "reports.0.due_offset_days",
+      "page": 1,
+      "quote": "due no later than 90 days after the end of the budget period"
+    },
+    {
+      "field": "reports.3.report_type",
+      "page": 1,
+      "quote": "submit the SF-425 on a semi-annual basis"
+    },
+    {
+      "field": "reports.9.report_type",
+      "page": 1,
+      "quote": "final comprehensive report is due no later than 120 days after the end"
+    }
+  ],
+  "uncertainties": []
+}

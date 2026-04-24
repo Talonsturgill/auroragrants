@@ -1,0 +1,417 @@
+{
+  "award_summary": {
+    "program_name": "Tribal Youth Initiative",
+    "funder_name": "Bureau of Indian Affairs",
+    "award_min_usd": 250000,
+    "award_max_usd": 250000,
+    "period_months": 24,
+    "cfda_number": "15.141",
+    "eligibility_summary": "Tribal organization awarded under the BIA Tribal Youth Initiative, subject to 2 CFR 200 and 25 U.S.C. 13."
+  },
+  "reports": [
+    {
+      "title": "Quarterly Programmatic Performance Report Q1",
+      "report_type": "ppr",
+      "due_offset_days": 30,
+      "period_months": 3,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "activities_completed",
+          "label": "Activities Completed",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Description of youth programming delivered during the quarter."
+        },
+        {
+          "key": "participant_outcomes",
+          "label": "Participant Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Quantitative and qualitative results for youth participants."
+        },
+        {
+          "key": "challenges_and_mitigations",
+          "label": "Challenges and Mitigations",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Obstacles encountered and steps taken to address them."
+        }
+      ]
+    },
+    {
+      "title": "Quarterly Programmatic Performance Report Q2",
+      "report_type": "ppr",
+      "due_offset_days": 30,
+      "period_months": 3,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "activities_completed",
+          "label": "Activities Completed",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Description of youth programming delivered during the quarter."
+        },
+        {
+          "key": "participant_outcomes",
+          "label": "Participant Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Quantitative and qualitative results for youth participants."
+        },
+        {
+          "key": "challenges_and_mitigations",
+          "label": "Challenges and Mitigations",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Obstacles encountered and steps taken to address them."
+        }
+      ]
+    },
+    {
+      "title": "Quarterly Programmatic Performance Report Q3",
+      "report_type": "ppr",
+      "due_offset_days": 30,
+      "period_months": 3,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "activities_completed",
+          "label": "Activities Completed",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Description of youth programming delivered during the quarter."
+        },
+        {
+          "key": "participant_outcomes",
+          "label": "Participant Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Quantitative and qualitative results for youth participants."
+        },
+        {
+          "key": "challenges_and_mitigations",
+          "label": "Challenges and Mitigations",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Obstacles encountered and steps taken to address them."
+        }
+      ]
+    },
+    {
+      "title": "Quarterly Programmatic Performance Report Q4",
+      "report_type": "ppr",
+      "due_offset_days": 30,
+      "period_months": 3,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "activities_completed",
+          "label": "Activities Completed",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Description of youth programming delivered during the quarter."
+        },
+        {
+          "key": "participant_outcomes",
+          "label": "Participant Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Quantitative and qualitative results for youth participants."
+        },
+        {
+          "key": "challenges_and_mitigations",
+          "label": "Challenges and Mitigations",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Obstacles encountered and steps taken to address them."
+        }
+      ]
+    },
+    {
+      "title": "Quarterly Programmatic Performance Report Q5",
+      "report_type": "ppr",
+      "due_offset_days": 30,
+      "period_months": 3,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "activities_completed",
+          "label": "Activities Completed",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Description of youth programming delivered during the quarter."
+        },
+        {
+          "key": "participant_outcomes",
+          "label": "Participant Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Quantitative and qualitative results for youth participants."
+        },
+        {
+          "key": "challenges_and_mitigations",
+          "label": "Challenges and Mitigations",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Obstacles encountered and steps taken to address them."
+        }
+      ]
+    },
+    {
+      "title": "Quarterly Programmatic Performance Report Q6",
+      "report_type": "ppr",
+      "due_offset_days": 30,
+      "period_months": 3,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "activities_completed",
+          "label": "Activities Completed",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Description of youth programming delivered during the quarter."
+        },
+        {
+          "key": "participant_outcomes",
+          "label": "Participant Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Quantitative and qualitative results for youth participants."
+        },
+        {
+          "key": "challenges_and_mitigations",
+          "label": "Challenges and Mitigations",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Obstacles encountered and steps taken to address them."
+        }
+      ]
+    },
+    {
+      "title": "Quarterly Programmatic Performance Report Q7",
+      "report_type": "ppr",
+      "due_offset_days": 30,
+      "period_months": 3,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "activities_completed",
+          "label": "Activities Completed",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Description of youth programming delivered during the quarter."
+        },
+        {
+          "key": "participant_outcomes",
+          "label": "Participant Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Quantitative and qualitative results for youth participants."
+        },
+        {
+          "key": "challenges_and_mitigations",
+          "label": "Challenges and Mitigations",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Obstacles encountered and steps taken to address them."
+        }
+      ]
+    },
+    {
+      "title": "Quarterly Programmatic Performance Report Q8",
+      "report_type": "ppr",
+      "due_offset_days": 30,
+      "period_months": 3,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "activities_completed",
+          "label": "Activities Completed",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Description of youth programming delivered during the quarter."
+        },
+        {
+          "key": "participant_outcomes",
+          "label": "Participant Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 600,
+          "word_count_min": null,
+          "description": "Quantitative and qualitative results for youth participants."
+        },
+        {
+          "key": "challenges_and_mitigations",
+          "label": "Challenges and Mitigations",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 400,
+          "word_count_min": null,
+          "description": "Obstacles encountered and steps taken to address them."
+        }
+      ]
+    },
+    {
+      "title": "Final Narrative Report",
+      "report_type": "final",
+      "due_offset_days": 120,
+      "period_months": 24,
+      "format": "portal",
+      "narrative_sections": [
+        {
+          "key": "executive_summary",
+          "label": "Executive Summary",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 500,
+          "word_count_min": null,
+          "description": "Comprehensive executive summary for the final report."
+        },
+        {
+          "key": "cumulative_outcomes",
+          "label": "Cumulative Outcomes",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 1500,
+          "word_count_min": null,
+          "description": "Cumulative outcomes across the full period of performance."
+        },
+        {
+          "key": "sustainability_and_next_steps",
+          "label": "Sustainability and Next Steps",
+          "field_type": "narrative",
+          "required": true,
+          "word_count_max": 750,
+          "word_count_min": null,
+          "description": "Sustainability plans and next steps after the award ends."
+        }
+      ]
+    },
+    {
+      "title": "SF-425 Federal Financial Report H1",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "grants_gov",
+      "narrative_sections": []
+    },
+    {
+      "title": "SF-425 Federal Financial Report H2",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "grants_gov",
+      "narrative_sections": []
+    },
+    {
+      "title": "SF-425 Federal Financial Report H3",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "grants_gov",
+      "narrative_sections": []
+    },
+    {
+      "title": "SF-425 Federal Financial Report H4",
+      "report_type": "sf425",
+      "due_offset_days": 30,
+      "period_months": 6,
+      "format": "grants_gov",
+      "narrative_sections": []
+    }
+  ],
+  "citations": [
+    {
+      "field": "award_summary.program_name",
+      "page": 1,
+      "quote": "funding under the Tribal Youth Initiative"
+    },
+    {
+      "field": "award_summary.funder_name",
+      "page": 1,
+      "quote": "Bureau of Indian Affairs has awarded your tribal organization"
+    },
+    {
+      "field": "award_summary.cfda_number",
+      "page": 1,
+      "quote": "CFDA 15.141"
+    },
+    {
+      "field": "award_summary.award_max_usd",
+      "page": 1,
+      "quote": "in the amount of $250,000"
+    },
+    {
+      "field": "award_summary.period_months",
+      "page": 1,
+      "quote": "period of performance is 24 months"
+    },
+    {
+      "field": "reports.0.report_type",
+      "page": 1,
+      "quote": "Programmatic Performance Report each quarter"
+    },
+    {
+      "field": "reports.0.due_offset_days",
+      "page": 1,
+      "quote": "due no later than 30 days after the close of the reporting period"
+    },
+    {
+      "field": "reports.8.report_type",
+      "page": 1,
+      "quote": "comprehensive final narrative report is due 120 days after the end"
+    },
+    {
+      "field": "reports.9.report_type",
+      "page": 1,
+      "quote": "submit the SF-425 on a semi-annual basis"
+    }
+  ],
+  "uncertainties": []
+}
