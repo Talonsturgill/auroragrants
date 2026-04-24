@@ -45,3 +45,25 @@ Pending acceptance items (require live services):
 - Parser bake-off against real NOFOs (drop PDFs in worker/golden_set/pdfs/ and run parser_bakeoff.py)
 - /app/documents upload flow in browser with real Supabase/Clerk
 - Ingestion pipeline end-to-end (parse -> chunk -> embed -> retrieve) against real credentials
+
+2026-04-24 22:09 AKDT | phase 4 | acceptance_passed | pnpm typecheck clean; pnpm test 151/151; pnpm build green; worker pytest 113/113
+
+Phase 4 deliverables:
+- WCE loop: worker/app/wce/loop.py — Writer/Critic/Editor with MAX_ITER=5, SURFACE_THRESHOLD=8.0, FLAG_THRESHOLD=6.0. Tracks best-scoring draft and returns it when cap trips. claude-opus-4-6 for high-stakes Critic.
+- Prompts: worker/prompts/{writer,critic,editor,factuality,rubric_scorer}.md with YAML frontmatter.
+- Eval gate: worker/app/evals/gate.py — 5 concurrent checks via asyncio.gather (factuality LLM-judge, rubric-adherence LLM-judge, hallucination regex, readability textstat, word-count bounds).
+- WCE route: worker/app/routes/wce.py POST /wce/draft-field — retrieves chunks, runs loop, returns DraftFieldResponse.
+- Evals route: worker/app/routes/evals.py POST /evals/gate — runs pre-surface gate, returns passed + failures.
+- Export: worker/app/export/ — WeasyPrint (PDF), python-docx (DOCX), plain text with AI-disclosure footer. POST /export/report. Only human_approved fields exported.
+- DB: 0007_phase4_drafter_tracking.sql — adds draft_status to report_fields, ready_for_export to reports.status, failure_reason to drafts, approved_at to reports.
+- Orchestrator: src/lib/drafts/orchestrator.ts — runDrafterForField() loads context, calls WCE worker, runs eval gate, inserts drafts row, writes audit log.
+- Web API: report-fields/[id]/draft, report-fields/[id]/drafts, report-fields/[id]/approve, reports/[id]/approve, reports/[id]/export routes.
+- Three-pane drafting UI: editor-shell, draft-editor ([n] citation pills + tooltips), citations-panel, critic-panel (SVG gauge + rubric table + severity-grouped fixes), approve-button (attestation dialog), regenerate-button (2s poll up to 90s), field-list, status-pill.
+- Export menu: ExportMenu dropdown (PDF/DOCX/text) in report detail header; disabled with tooltip when report not ready_for_export.
+- Types: src/lib/types/draft.ts merged — UI types (Citation citation_id:number, CriticFix, RubricScore, Critique[], Draft row, APPROVAL_ATTESTATION_PHRASE) + worker contract types (DraftContent, DraftContext, DraftResponse, EvalGateParams/Response).
+
+Pending acceptance items (require live services):
+- WCE end-to-end against real Anthropic API (ANTHROPIC_API_KEY + Supabase populated with funder rubric + tenant docs)
+- Eval gate with real scoring (factuality judge needs Anthropic API)
+- Approve flow in browser (Clerk session + Supabase RLS)
+- Export download in browser (WeasyPrint + python-docx on Fly.io worker)
