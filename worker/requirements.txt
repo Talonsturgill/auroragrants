@@ -24,7 +24,7 @@ postgrest==0.18.0
 pdfplumber==0.11.4
 marker-pdf==0.3.10
 unstructured[pdf]==0.16.11
-pypdf==5.1.0
+pypdf==6.21.4
 
 # Text processing
 textstat==0.7.4
